@@ -1,0 +1,312 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+    text-align: center;
+    font-size:x-small;
+}
+table {
+    float:left;
+}
+table#vverh-vniz {
+    width:25%;
+}
+table#vlevo-vpravo {
+    width:25%;
+}
+table#shirina-sektora {
+    width:50%;
+}
+table#sbros-table {
+    width:100%;
+    padding:5px;
+}
+table#vcu-table {
+    margin-left : 200px;
+}
+table#peregovornayaSet-table {
+    margin-left : 128px;
+}
+table#regumraboty-transparants {
+    width:100%;
+}
+table button {
+    height:30px;
+    width:15px;
+}
+#shirina-sektora button {
+    height:30px;
+    width:45px;
+    padding:1px;
+    text-align:center;
+    font-size:small;
+}
+#viderzkaAC button {
+    height : 22px;
+    width:20px;
+    margin:0px;
+}
+#vcu-table button {
+    height : 22px;
+    width:20px;
+    margin:0px;
+}
+table#diagramu-table {
+        width:100%;
+}
+table#regum-table button {
+    height : 22px;
+    width:30px;
+    margin:0px;
+}
+#indicators-table {
+    margin-left:80px;
+}
+#vcu-transparants {
+    margin-left:40px;
+}
+table#indicators-table td {
+    width:13px;
+    height:13px;
+}
+#vcu-transparants td{
+     width:40px;
+ }
+td {
+    /*border: thin dotted black;*/
+    width:10px;
+    padding:0px;
+}
+
+/*identifiers*/
+
+
+#pult {
+    border:1px solid ;
+    width:800px;
+    height: auto;
+    background-color:whitesmoke;
+    margin: 0 auto;
+}
+#top {
+    height:360px;
+}
+#top-left, #top-center, #top-right {
+    width:246px;
+    height:350px;
+    float:left;
+}
+#top-left table {
+    width:100%;
+}
+#top-right-1{
+    width:40%;
+    float:left;
+    height:170px;
+}
+#top-right-2{
+    width:60%;
+    float:left;
+    height:170px;
+}
+#clock-shetchik {
+    width:100%;
+    height:100px;
+}
+#clock-div {
+    float:left;
+    height:100%;
+    width:40%;
+    /*background:url("images/clock.png") no-repeat center center;*/
+}
+#shetchik-div {
+    float:left;
+    height:100%;
+    width:60%;
+    padding-top:20px;
+}
+#narabotka-table {
+    margin-left:30px;
+    margin-top:5px;
+}
+#narabotka-st, #narabotka-per {
+    background-color: darkslategray;
+    color : white;
+}
+#emu-div{
+    float:left;
+    height:auto;
+    width:85%;
+}
+#table-emu {
+    margin-left:10px;
+}
+#station-div{
+    height:auto;
+    width:15%;
+    float:left;
+}
+#center {
+    height:auto;
+}
+#bottom {
+    height:auto;
+}
+#transparants-1 {
+    width:720px;
+    height:140px;
+    position:relative;
+    left:30px;
+}
+#vcu-div {
+    width:680px;
+    height:128px;
+    position:relative;
+    left:46px;
+}
+#vcu-div div {
+    float:left;
+    width:20%;
+    height:120px;
+}
+#transparants-2 {
+    width:680px;
+    height:50px;
+    position:relative;
+    left:46px;
+}
+#top-buttons {
+    width:720px;
+    height:80px;
+    position:relative;
+    left:30px;
+}
+#image-content{
+    width:720px;
+    height:260px;
+    position:relative;
+    left:30px;
+}
+#image-left {
+    width:120px;
+    height:248px;
+    float:left;
+}
+#azimut {
+    position:relative;
+    width:212px;
+    height:212px;
+    float:left;
+    align-content: center;
+    background:url("images/back_azimut.png") no-repeat center center;
+}
+#ugolmesta {
+    width:212px;
+    height:212px;
+    float:left;
+    background:url("images/back_um.png") no-repeat center center;
+}
+#image-right {
+    width:120px;
+    height:248px;
+    float:left;
+}
+#bottom-buttons {
+    width:720px;
+    height:90px;
+    position:relative;
+    left:30px;
+}
+#azCanva {
+    position:relative;
+    z-index: 3;
+}
+#lamp-field {
+    position: absolute;
+    width: 178px;
+    height:178px;
+    top: 26px;
+    left: 159px;
+    background: transparent;
+    border: 1px dashed #312a22;
+}
+
+/*Classes*/
+.panel {
+    width:780px;
+    border:1px solid ;
+    margin:5px;
+    padding:5px;
+}
+.container {
+    border:1px solid lightgray;
+    margin:3px;
+    padding:3px;
+}
+.vegas-background {
+    image-rendering: optimizeQuality;
+    -ms-interpolation-mode: bicubic;
+    z-index:-2;
+}
+.greenPassive {
+    border: 2px double darkgrey;
+    background-color:forestgreen;
+}
+.greenActive {
+    border: 2px double yellow;
+    background-color:greenyellow;
+}
+.orangePassive{
+    border: 2px double darkgrey;
+    background-color: burlywood;
+}
+.orangeActive{
+    border: 2px double yellow;
+    background-color: orange;
+}
+.activButton{
+    border-style: inset;
+    background-color: lightgray;
+}
+.iDiv{
+    position:absolute;
+    width:15px;
+    height:15px;
+}
+
+
+#box1 {
+    position:fixed;
+    top: 50px;
+    left: 50px;
+    background-color:yellow;
+    height:50px;
+    width:50px;
+}
+
+#box2 {
+    position:absolute;
+    top: 50px;
+    right: 50px;
+    background-color:green;
+    height:50px;
+    width:50px;
+}
+
+#box3 {
+    position:absolute;
+    bottom: 50px;
+    right: 50px;
+    background-color:orange;
+    height:50px;
+    width:50px;
+}
+
+#box4 {
+    position:absolute;
+    bottom: 50px;
+    left: 50px;
+    background-color:red;
+    height:50px;
+    width:50px;
+}
+
