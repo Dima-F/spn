@@ -16,9 +16,13 @@ var config = {
     maxDistance:250,
     //время жизни цели в мин.
     expirationTime:3,
-    //
-    deltaUzkie:3,
-    deltaShirokie:7,
+    //используется при поиске цели
+    deltaUzkie:2,
+    deltaShirokie:5,
     //время сопровождения в с
-    timeSoprovogdeniya:20
+    timeSoprovogdeniya:20,
+    //максимально возможный угол места цели относительно станции
+    //для возможности осуществления поиска.
+    relativeMaxUmZone1:11,
+    relativeMaxUmZone2:30
 };

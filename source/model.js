@@ -23,13 +23,10 @@ function Station(reo) {
     this.u = 0;
     this.poiskDirection = "z";
 
-
-
     this.idA = 0;
     this.idU = 0;
     this.idViderzka = 0;
     this.idSoprovogdeniya = 0;
-    this.idStopSoprovogdeniya = 0;
     this.reo = reo;
     this.view = null;
 
@@ -476,16 +473,52 @@ function Station(reo) {
         return false;
     }
 }
+
 function Angle(a, u) {
     this.a = a;
     this.u = u;
 }
 
-function Target(channel, angle, type, distance, expiration) {
-    this.channel = channel;
-    this.angle = angle;
-    this.type = type;
-    this.distance = distance;
+function Target(channel, type, zone, expiration) {
+    this.channel = this.setChannel(channel);
+    //angle is depending on zone!
+    this.angle = null;
+    //1(a)-rls weapon (outer),2(b)-rls bo (inner)
+    this.type = this.setType(type);
+    //1 < more than 100km, 2 - less then 100km
+    this.zone = this.setZone(zone);
+
+    this.setChannel=function(value){
+        if(isNaN(value)|| value<1 || value>64)
+            throw new Error('Wrong channel in target.');
+        else{
+            this.channel=value;
+        }
+    };
+    this.setAngle = function (angle) {
+        if(angle instanceof Angle){
+            if(angle.a<0 || angle.a>359)
+                throw new Error('Wrong angle in target.');
+            if(angle.u<0 || angle.u>60)
+                throw new Error('Wrong angle in target.');
+            this.angle=angle;
+        }
+        else{
+            throw new Error('Wrong angle in target.');
+        }
+    };
+    this.setZone = function (zone) {
+        if(zone===1 || zone===2){
+            this.zone=zone;
+        }
+        else throw new Error('Wrong zone in target.');
+    };
+    this.setType = function (type) {
+        if(type==='a' || type==='b'){
+            this.type=type;
+        }
+        else throw new Error('Wrong type in target.');
+    };
     this.expiration = expiration;
 }
 
@@ -496,24 +529,38 @@ function REO() {
             return;
         this.targets = [];
         for (var i = 0; i < amount; i++) {
-            this.targets[i] = new Target(getChannel(), getAngle(), getType(), getDistance(), getExpiration())
+            this.targets[i] = new Target(getChannel(), getType(), getZone(), getExpiration());
+            //todo:ugly code!!!
+            this.targets[i].setAngle(getAngle(this.targets[i]));
         }
     };
     var getChannel = function () {
         return Math.floor(Math.random() * 65);
     };
-    var getAngle = function () {
+    var getAngle = function (target) {
         var a = Math.floor(Math.random() * 360);
-        var u = Math.floor(Math.random() * 61);
+        var u=null;
+        switch(target.zone){
+            case 1:
+                u=Math.floor(Math.random() * (config.relativeMaxUmZone1+1));
+            break;
+            case 2:
+                u=Math.floor(Math.random() * (config.relativeMaxUmZone2+1));
+            break;
+            default:throw new Error('Wrong zone in target!');
+        }
         return new Angle(a, u);
     };
     var getType = function () {
         return Math.random() > 0.5 ? 'a' : 'b';
     };
-    var getDistance = function () {
+    var getZone = function () {
+        return Math.random() > 0.5 ? 1 : 2;
+    };
+    /*var getDistance = function () {
         if (config)
             return Math.floor(config.minDistance + Math.random() * (config.maxDistance - config.minDistance + 1));
-    };
+    };*/
     var getExpiration = function () {
         if (config)
             return config.expirationTime;
@@ -535,6 +582,4 @@ function REO() {
             }
         }
     };
-
-
 }

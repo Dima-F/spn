@@ -57,6 +57,7 @@ function run() {
         }
 
     };
+    
     kanalyTumbler.onclick = function () {
         view.toggleKanalyTumbler();
     };
