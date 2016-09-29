@@ -3,12 +3,14 @@ function Station(reo) {
     var idAvariya = 0;
     var idVisokoe = 0;
 
+    //properties
     this.view = null;
     this.started = false;
     this.nizkoe = false;
     this.avariyaAk = false;
+    this.avariyaVzs = false;
     this.visokoe = false;
-    this._3kV = false;
+    this._3kV = false;//podavlenie
     this.peredachik = false;
     this.emuAzimut = false;
     this.emuUgolMesta = false;
@@ -30,13 +32,26 @@ function Station(reo) {
     this.reo = reo;
     this.view = null;
 
+    //event technology
+    this.updateS = function () {
+        this.view.refreshStatic();
+    };
+    this.updateR = function () {
+        this.view.refreshRotation();
+        if(this.currentRegum!="pa" && !this.soprovogdenie)
+            this.resive();
+    };
+    this.subscribe = function (view) {
+        this.view = view;
+    };
+
+    //starting
     this.start = function () {
         this.started = true;
         this.nizkoe = true;
         this.avariyaAk = true;
         this.prepareVisokoe();
     };
-
     this.toggleStart = function () {
         if (this.started) {
             this.reset();
@@ -46,6 +61,23 @@ function Station(reo) {
     };
     this.toggleAntenna = function () {
         this.currentAntenna = this.currentAntenna !== "a" ? "a" : "e";
+    };
+    this.prepareVisokoe = function () {
+        var self = this;
+        idAvariya = setTimeout(function () {
+            if (!self.started) {
+                return null;
+            }
+            self.avariyaAk = false;
+            self.updateS();
+        }, config.delayAvariya * 1000);
+
+        idVisokoe = setTimeout(function () {
+            if (self.started && self.nizkoe && !self.avariyaAk) {
+                self.visokoe = true;
+                self.updateS();
+            }
+        }, config.delayVisokoe * 1000);
     };
     this.reset = function () {
         this.started = false;
@@ -63,6 +95,8 @@ function Station(reo) {
         this.clearTimersAngles();
         //для азимута и угла места сброс не требуется, т. к. антена сохраняет свое положение
     };
+
+    //AFS mooving
     this.up = function () {
         if (!this.emuUgolMesta)
             return false;
@@ -89,7 +123,6 @@ function Station(reo) {
             }
         }
     };
-    //против часовой стрелки
     this.left = function () {
         if (!this.emuAzimut)
             return false;
@@ -101,7 +134,6 @@ function Station(reo) {
             return true;
         }
     };
-    //за часовой стрелкой
     this.right = function () {
         if (!this.emuAzimut)
             return false;
@@ -113,7 +145,6 @@ function Station(reo) {
             return true;
         }
     };
-
     this.vverh = function (delay) {
         if (this.currentRegum != "pa") {
             alert('Текущий режим работы не полуавтомат!');
@@ -125,8 +156,8 @@ function Station(reo) {
             self.up();
         }, delay);
     };
-    self.vniz = function (delay) {
-        if (self.currentRegum != "pa") {
+    this.vniz = function (delay) {
+        if (this.currentRegum != "pa") {
             alert('Текущий режим работы не полуавтомат!');
             return;
         }
@@ -163,7 +194,8 @@ function Station(reo) {
             this.clearTimersAngles();
         }
     };
-    //todo:validation
+
+    //setters
     this.setEmuAz = function (flag) {
         if (!this.started) {
             return null;
@@ -172,7 +204,6 @@ function Station(reo) {
             this.emuAzimut = flag;
         }
     };
-    //todo:validation
     this.setEmuUm = function (flag) {
         if (!this.started) {
             return false;
@@ -193,8 +224,12 @@ function Station(reo) {
         return false;
     };
     this.setDiagram = function (val) {
-        if (!this.started) {
+        if (!this.started || this.currentDiagrams==val) {
             return false;
+        }
+        if(this.currentRegum!="pa"){
+            alert("Переключать диаграмы можно только в режиме 'Полуавтомат'!");
+            return;
         }
         if (val == "w" || val == "n") {
             this.currentDiagrams = val;
@@ -222,23 +257,15 @@ function Station(reo) {
             this.vidergka = val;
         }
     };
-    this.prepareVisokoe = function () {
-        var self = this;
-        idAvariya = setTimeout(function () {
-            if (!self.started) {
-                return null;
+    this.trySetPeredatchik = function () {
+            if(this.started && this.visokoe){
+                this.peredachik=true;
+                return true;
             }
-            self.avariyaAk = false;
-            self.updateS();
-        }, config.delayAvariya * 1000);
-
-        idVisokoe = setTimeout(function () {
-            if (self.started && self.nizkoe && !self.avariyaAk) {
-                self.visokoe = true;
-                self.updateS();
-            }
-        }, config.delayVisokoe * 1000);
+        return false;
     };
+
+    //regums
     this.obzor = function () {
         if (!this.started || this.currentRegum == "ob" || !this.emuAzimut) {
             return;
@@ -315,6 +342,8 @@ function Station(reo) {
                 alert("Bad value!");
         }
     };
+
+    //poisk
     this.poiskA = function () {
         var self = this;
         var counter = 0;
@@ -387,6 +416,7 @@ function Station(reo) {
         this.poiskU();
     };
 
+    //timers
     this.clearTimersLamps = function () {
         clearTimeout(idAvariya);
         clearTimeout(idVisokoe);
@@ -398,56 +428,37 @@ function Station(reo) {
         clearInterval(this.idSoprovogdeniya);
     };
 
-    //event technology
-    this.updateS = function () {
-        this.view.refreshStatic();
-    };
-    this.updateR = function () {
-        this.view.refreshRotation();
-        if(this.currentRegum!="pa" && !this.soprovogdenie)
-            this.resive();
-    };
-    this.subscribe = function (view) {
-        this.view = view;
-    };
-
-
+    //behavior
     this.resive = function () {
         if (!this.started || !this.nizkoe)
             return;
         if (!this.reo || this.reo.targets.length == 0)
             return;
         for (var i = 0; i < this.reo.targets.length; i++) {
-            if (this.a == this.reo.targets[i].angle.a) {
-                this.view.lightSector(this.reo.targets[i].angle.a, this.reo.targets[i].type);
-                this.view.lightKanal(this.reo.targets[i].channel);
-                var self = this;
-
-                switch (self.currentRegum) {
-                    case "pa":
-                        break;
-                    case "av":
-                        self.clearTimersAngles();
-                        self.startSoprovogdenie();
-                        break;
-                    case "ob":
-                        if (self.vidergka != 0) {
-                            self.clearTimersAngles();
-                            self.idViderzka = setTimeout(function () {
-                                self.currentRegum="pa";
-                                self.obzor();
-                            }, self.vidergka * 1000);
-                        }
-                        break;
-                    default:
-                        throw new Error("Wrong regum!");
+            var target = this.reo.targets[i];
+            if (this.find(target)) {
+                this.view.lightSector(target.angle.a, target.type);
+                this.view.lightKanal(target.channel);
+                if(this.currentRegum=="av"){
+                    this.clearTimersAngles();
+                    this.startSoprovogdenie();
                 }
             }
         }
     };
+    this.find = function (target) {
+        var deltaU = this.currentDiagrams=="w"?config.deltaShirokie:config.deltaUzkie;
+        var seeZone = this.currentDiagrams=="w"? 2 : 1;
+        return (this.a == target.angle.a
+            &&
+                Math.abs(this.u-target.angle.u)<=deltaU
+            &&
+            seeZone === target.zone);
+    };
     this.startSoprovogdenie = function () {
         var self=this;
         self.soprovogdenie=true;
+        self._3kV = true;
         self.updateS();
         var direction = Math.random();
         self.idSoprovogdeniya = setInterval(function () {
@@ -461,17 +472,11 @@ function Station(reo) {
         var self=this;
         clearInterval(self.idSoprovogdeniya);
         self.soprovogdenie=false;
+        self._3kV = false;
         self.updateS();
         self.currentRegum = "pa";
         self.avtomat();
     };
-    this.transmit = function () {
-        if(this.visokoe && this.soprovogdenie){
-            this.peredachik = true;
-            return true;
-        }
-        return false;
-    }
 }
 
 function Angle(a, u) {
@@ -480,15 +485,7 @@ function Angle(a, u) {
 }
 
 function Target(channel, type, zone, expiration) {
-    this.channel = this.setChannel(channel);
-    //angle is depending on zone!
-    this.angle = null;
-    //1(a)-rls weapon (outer),2(b)-rls bo (inner)
-    this.type = this.setType(type);
-    //1 < more than 100km, 2 - less then 100km
-    this.zone = this.setZone(zone);
-
-    this.setChannel=function(value){
+    this.setChannel = function(value){
         if(isNaN(value)|| value<1 || value>64)
             throw new Error('Wrong channel in target.');
         else{
@@ -514,12 +511,20 @@ function Target(channel, type, zone, expiration) {
         else throw new Error('Wrong zone in target.');
     };
     this.setType = function (type) {
-        if(type==='a' || type==='b'){
+        if(type==1 || type==2){
             this.type=type;
         }
         else throw new Error('Wrong type in target.');
     };
     this.expiration = expiration;
+
+    this.setChannel(channel);
+    //angle is depending on zone!
+    this.angle = null;
+    //1-rls weapon (outer),2-rls bo (inner)
+    this.setType(type);
+    //1 < more than 100km, 2 - less then 100km
+    this.setZone(zone);
 }
 
 function REO() {
@@ -552,7 +557,7 @@ function REO() {
         return new Angle(a, u);
     };
     var getType = function () {
-        return Math.random() > 0.5 ? 'a' : 'b';
+        return Math.random() > 0.5 ? 1 : 2;
     };
     var getZone = function () {
         return Math.random() > 0.5 ? 1 : 2;
@@ -576,7 +581,7 @@ function REO() {
                     ' azimut:' + self.targets[i].angle.a +
                     ' um:' + self.targets[i].angle.u +
                     ' type:' + self.targets[i].type +
-                    ' distance:' + self.targets[i].distance +
+                    ' zone:' + self.targets[i].zone +
                     ' expiration:' + self.targets[i].expiration;
                 console.log(info);
             }

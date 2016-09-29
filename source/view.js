@@ -23,6 +23,7 @@ var lampVklRychnoe = document.getElementById("lampRychnoe");
 var lampAntEkv = document.getElementById("antennaLampEkv");
 var lampAntAnt = document.getElementById("antennaLampAnt");
 var lampAvariyaAk = document.getElementById("lampAvariyaAk");
+var lampAvariyaVzs = document.getElementById("lampAvariyaVzs");
 
 
 //buttons
@@ -123,7 +124,7 @@ function View(station) {
                 newDiv.setAttribute('style', 'top:' + Math.floor(x) + 'px' + ';' + 'left:' + Math.floor(y) + 'px' + ';');
                 var newImg = document.createElement('img');
                 newImg.src = "./images/lamps/gray_lamp.png";
-                newImg.id = (j == 0) ? "a" + i : "b" + i;
+                newImg.id = (j == 0) ? "2_" + i : "1_" + i;
                 newDiv.appendChild(newImg);
                 container.appendChild(newDiv);
             }
@@ -132,10 +133,10 @@ function View(station) {
 
     this.displaySectorLampsOff = function () {
         for (var i = 0; i < 16; i++) {
-            var e1 = document.getElementById('a' + i);
-            e1.setAttribute("src", "images/lamps/gray_lamp.png");
-            var e2 = document.getElementById('b' + i);
-            e2.setAttribute("src", "images/lamps/gray_lamp.png");
+            for(var j=0;j<2;j++){
+                var e = document.getElementById((j+1)+'_' + i);
+                e.setAttribute("src", "images/lamps/gray_lamp.png");
+            }
         }
     };
 
@@ -147,24 +148,12 @@ function View(station) {
     };
 
     this.lightSector = function (angle, type) {
-        if (isNaN(angle) || angle > 359 || angle < 0 || (type != 'a' && type != 'b')) {
+        if (isNaN(angle) || angle > 359 || angle < 0 || (type != 1 && type != 2)) {
             console.error('Wrong parameters in view.lightSector.');
-
         }
         else {
-            var id = type + Math.floor(angle / 22.5);
+            var id = type+ '_' + Math.floor(angle / 22.5);
             document.getElementById(id).setAttribute('src', './images/lamps/yellow_lamp.png');
-        }
-    };
-
-    this.unLightSector = function (identifier) {
-        var letter = identifier[0];
-        var number = identifier.substring(1);
-        if ((letter != 'a' && letter != 'b') || isNaN(number) || number > 15 || number < 0) {
-            console.error('Wrong parameter ' + identifier + ' in view.unLightSector.');
-        }
-        else {
-            document.getElementById(identifier).setAttribute('src', './images/lamps/gray_lamp.png');
         }
     };
 
@@ -174,15 +163,6 @@ function View(station) {
         else {
             var elem = document.getElementById(number + "k");
             elem.setAttribute("src", "images/lamps/yellow_lamp.png");
-        }
-    };
-
-    this.randomLight = function () {
-        var count = Math.floor(Math.random() * 5);
-        for (var i = 0; i <= count; i++) {
-            var letter = count > 2 ? 'a' : 'b';
-            this.lightSector(Math.floor(Math.random() * 360), letter);
-            this.lightKanal(Math.floor(Math.random() * 65));
         }
     };
 
@@ -309,6 +289,145 @@ function View(station) {
     };
 
     this.refreshStatic = function () {
+        var vklNizkieAndRuchnoe = function () {
+            lampVklNizkoe.setAttribute("src", "images/lamps/green_lamp.png");
+            //simplified
+            lampVklRychnoe.setAttribute("src", "images/lamps/yellow_lamp.png");
+        };
+        var vklAntenna = function () {
+            if (self.station.currentAntenna == "a") {
+                lampAntAnt.setAttribute("src", "images/lamps/red_lamp.png");
+                lampAntEkv.setAttribute("src", "images/lamps/gray_lamp.png");
+            }
+            else {
+                lampAntAnt.setAttribute("src", "images/lamps/gray_lamp.png");
+                lampAntEkv.setAttribute("src", "images/lamps/green_lamp.png");
+            }
+        };
+        var vklEmu = function () {
+            if (self.station.emuAzimut) {
+                lampEmuAz.setAttribute("src", "images/lamps/yellow_lamp.png");
+            }
+            else {
+                lampEmuAz.setAttribute("src", "images/lamps/gray_lamp.png");
+            }
+            if (self.station.emuUgolMesta) {
+                lampEmuUm.setAttribute("src", "images/lamps/yellow_lamp.png");
+            }
+            else {
+                lampEmuUm.setAttribute("src", "images/lamps/gray_lamp.png");
+            }
+        };
+        var vklDiagrams = function () {
+            if(station.currentDiagrams=="w"){
+                trDiagramuUzkie.setAttribute("class", "orangePassive");
+                trDiagramuShirokie.setAttribute("class", "orangeActive");
+            }
+            else {
+                trDiagramuUzkie.setAttribute("class", "orangeActive");
+                trDiagramuShirokie.setAttribute("class", "orangePassive");
+            }
+        };
+        var vklVidUpr = function () {
+            if(station.currentVidUpravleniya=="vcu"){
+                trAvtonomno.setAttribute("class", "orangePassive");
+                trAvtonomno2.setAttribute("class", "greenPassive");
+                trVcu.setAttribute("class", "orangeActive");
+                trVcu2.setAttribute("class", "greenActive");
+            }
+            else{
+                trAvtonomno.setAttribute("class", "orangeActive");
+                trAvtonomno2.setAttribute("class", "greenActive");
+                trVcu.setAttribute("class", "orangePassive");
+                trVcu2.setAttribute("class", "greenPassive");
+            }
+        };
+        var vklVisokoe = function () {
+            if(self.station.visokoe){
+                lampVklVisokoe.setAttribute("src", "images/lamps/green_lamp.png");
+            }
+            else {
+                lampVklVisokoe.setAttribute("src", "images/lamps/gray_lamp.png");
+            }
+        };
+        var vklPeredatchick = function () {
+            if(station.peredachik){
+                lampVklPeredatchik.setAttribute("src", "images/lamps/red_lamp.png");
+                if(station._3kV){
+                    lampAvariyaVzs.setAttribute("src", "images/lamps/gray_lamp.png");
+                }
+                else {
+                    lampAvariyaVzs.setAttribute("src", "images/lamps/red_lamp.png");
+                }
+            }
+            else {
+                lampVklPeredatchik.setAttribute("src", "images/lamps/gray_lamp.png");
+            }
+        };
+        var vklPomeha = function () {
+            if(station.peredachik && station._3kV){
+                lampVkl3kV.setAttribute("src", "images/lamps/green_lamp.png");
+                trMoshnost.setAttribute("class", "orangeActive");
+            }
+            else {
+                lampVkl3kV.setAttribute("src", "images/lamps/gray_lamp.png");
+                trMoshnost.setAttribute("class", "orangePassive");
+            }
+        };
+        var vklAction = function () {
+            switch(station.currentRegum){
+                case "pa":
+                    //poluavtomat
+                    trPoluAvtomat.setAttribute("class", "greenActive");
+                    trObzor.setAttribute("class", "greenPassive");
+                    trPoisk.setAttribute("class", "greenPassive");
+                    trSoprovogdenie.setAttribute("class", "greenPassive");
+                    trOdinochnaya.setAttribute("class", "orangePassive");
+                    trOdinochnaya2.setAttribute("class", "greenPassive");
+                    break;
+                case "ob":
+                    if (station.currentSector == 360) {
+                        //obzor
+                        trPoluAvtomat.setAttribute("class", "greenPassive");
+                        trObzor.setAttribute("class", "greenActive");
+                        trPoisk.setAttribute("class", "greenPassive");
+                        trSoprovogdenie.setAttribute("class", "greenPassive");
+                        trOdinochnaya.setAttribute("class", "orangePassive");
+                        trOdinochnaya2.setAttribute("class", "greenPassive");
+                    } else {
+                        //poisk
+                        trPoluAvtomat.setAttribute("class", "greenPassive");
+                        trObzor.setAttribute("class", "greenPassive");
+                        trPoisk.setAttribute("class", "greenActive");
+                        trSoprovogdenie.setAttribute("class", "greenPassive");
+                        trOdinochnaya.setAttribute("class", "orangePassive");
+                        trOdinochnaya2.setAttribute("class", "greenPassive");
+                    }
+                    break;
+                case "av":
+                    if(station.soprovogdenie){
+                        //soprovogdenie
+                        trPoluAvtomat.setAttribute("class", "greenPassive");
+                        trObzor.setAttribute("class", "greenPassive");
+                        trPoisk.setAttribute("class", "greenPassive");
+                        trSoprovogdenie.setAttribute("class", "greenActive");
+                        trOdinochnaya.setAttribute("class", "orangeActive");
+                        trOdinochnaya2.setAttribute("class", "greenActive");
+                    }
+                    else {//poisk
+                        trPoluAvtomat.setAttribute("class", "greenPassive");
+                        trObzor.setAttribute("class", "greenPassive");
+                        trPoisk.setAttribute("class", "greenActive");
+                        trSoprovogdenie.setAttribute("class", "greenPassive");
+                        trOdinochnaya.setAttribute("class", "orangePassive");
+                        trOdinochnaya2.setAttribute("class", "greenPassive");
+                    }
+                    break;
+                default:throw new Error('Undefined regum!');
+            };
+        };
+            
+
         var self = this;
         if (!self.station.started) {
             this.displayLampsOff();
@@ -316,79 +435,16 @@ function View(station) {
             this.displaySectorLampsOff();
         }
         else {
-            lampVklNizkoe.setAttribute("src", "images/lamps/green_lamp.png");
-            //simplified
-            lampVklRychnoe.setAttribute("src", "images/lamps/yellow_lamp.png");
-            //current vid upravleniya
-            if (self.station.currentVidUpravleniya == "avt") {
-                self.T_Avtonomno_On();
-            }
-            else {
-                self.T_Vcu_On();
-            }
-            //current diagrams
-            if (self.station.currentDiagrams == "w") {
-                self.T_DiagramShirokie_On();
-            }
-            else {
-                self.T_DiagramUzkie_On();
-            }
-            //current regum
-            if (self.station.currentRegum == "ob") {
-                if (station.currentSector == 360) {
-                    self.T_Obzor_On();
-                } else {
-                    self.T_Poisk_On();
-                }
-            }
-            else if (self.station.currentRegum == "av") {
-                if (self.station.soprovogdenie) {
-                    self.T_Soprovogdenie_On();
-                } else {
-                    self.T_Poisk_On();
-                }
-            }
-            else {// currentRegum=="pa"
-                self.T_Poluavtomat_On();
-            }
-            //visokoe & peredatchik
-            self.DisplayVisokoe(self.station.visokoe);
-            self.DisplayPeredatchik(self.station.peredachik);
-            //avariya AK
-            new function () {
-                if (self.station.avariyaAk) {
-                    lampAvariyaAk.setAttribute("src", "images/lamps/red_lamp.png");
-                }
-                else {
-                    lampAvariyaAk.setAttribute("src", "images/lamps/gray_lamp.png");
-                }
-            }();
-            //emu
-            new function () {
-                if (self.station.emuAzimut) {
-                    lampEmuAz.setAttribute("src", "images/lamps/yellow_lamp.png");
-                }
-                else {
-                    lampEmuAz.setAttribute("src", "images/lamps/gray_lamp.png");
-                }
-                if (self.station.emuUgolMesta) {
-                    lampEmuUm.setAttribute("src", "images/lamps/yellow_lamp.png");
-                }
-                else {
-                    lampEmuUm.setAttribute("src", "images/lamps/gray_lamp.png");
-                }
-            }();
-            //ekvivalent-antena
-            new function () {
-                if (self.station.currentAntenna == "a") {
-                    lampAntAnt.setAttribute("src", "images/lamps/red_lamp.png");
-                    lampAntEkv.setAttribute("src", "images/lamps/gray_lamp.png");
-                }
-                else {
-                    lampAntAnt.setAttribute("src", "images/lamps/gray_lamp.png");
-                    lampAntEkv.setAttribute("src", "images/lamps/green_lamp.png");
-                }
-            }();
+            //each of methods depends on concrete situation
+            vklNizkieAndRuchnoe();
+            vklAntenna();
+            vklEmu();
+            vklDiagrams();
+            vklVidUpr();
+            vklVisokoe();
+            vklPeredatchick();
+            vklPomeha();
+            vklAction();
 
         }
     };
@@ -398,94 +454,11 @@ function View(station) {
         RotateU(this.station.u - this.u0);
         this.a0 = this.station.a;
         this.u0 = this.station.u;
+        this.UpdateUmLabel();
     };
 
-    this.T_Poluavtomat_On = function () {
-        trPoluAvtomat.setAttribute("class", "greenActive");
-        trObzor.setAttribute("class", "greenPassive");
-        trPoisk.setAttribute("class", "greenPassive");
-        trSoprovogdenie.setAttribute("class", "greenPassive");
-        this.T_Odinochnaya(false);
-    };
-    this.T_Obzor_On = function () {
-        trPoluAvtomat.setAttribute("class", "greenPassive");
-        trObzor.setAttribute("class", "greenActive");
-        trPoisk.setAttribute("class", "greenPassive");
-        trSoprovogdenie.setAttribute("class", "greenPassive");
-        this.T_Odinochnaya(false);
-    };
-    this.T_Poisk_On = function () {
-        trPoluAvtomat.setAttribute("class", "greenPassive");
-        trObzor.setAttribute("class", "greenPassive");
-        trPoisk.setAttribute("class", "greenActive");
-        trSoprovogdenie.setAttribute("class", "greenPassive");
-        this.T_Odinochnaya(false);
-    };
-    this.T_Soprovogdenie_On = function () {
-        trPoluAvtomat.setAttribute("class", "greenPassive");
-        trObzor.setAttribute("class", "greenPassive");
-        trPoisk.setAttribute("class", "greenPassive");
-        trSoprovogdenie.setAttribute("class", "greenActive");
-        this.T_Odinochnaya(true);
-    };
-    this.T_Vcu_On = function () {
-        trAvtonomno.setAttribute("class", "orangePassive");
-        trAvtonomno2.setAttribute("class", "greenPassive");
-        trVcu.setAttribute("class", "orangeActive");
-        trVcu2.setAttribute("class", "greenActive");
-    };
-    this.T_Avtonomno_On = function () {
-        trAvtonomno.setAttribute("class", "orangeActive");
-        trAvtonomno2.setAttribute("class", "greenActive");
-        trVcu.setAttribute("class", "orangePassive");
-        trVcu2.setAttribute("class", "greenPassive");
-    };
-    this.T_DiagramUzkie_On = function () {
-        trDiagramuUzkie.setAttribute("class", "orangeActive");
-        trDiagramuShirokie.setAttribute("class", "orangePassive");
-    };
-    this.T_DiagramShirokie_On = function () {
-        trDiagramuUzkie.setAttribute("class", "orangePassive");
-        trDiagramuShirokie.setAttribute("class", "orangeActive");
-    };
-    this.T_Odinochnaya = function (value) {
-        if (value) {
-            trOdinochnaya.setAttribute("class", "orangeActive");
-            trOdinochnaya2.setAttribute("class", "greenActive");
-        }
-        else {
-            trOdinochnaya.setAttribute("class", "orangePassive");
-            trOdinochnaya2.setAttribute("class", "greenPassive");
-        }
-    };
-    this.T_Grupa = function (value) {
-        if (value) {
-            trGrupa.setAttribute("class", "orangeActive");
-            trGrupa2.setAttribute("class", "greenActive");
-        }
-        else {
-            trGrupa.setAttribute("class", "orangePassive");
-            trGrupa2.setAttribute("class", "greenPassive");
-        }
-    };
-    this.DisplayPeredatchik = function (value) {
-        if(value){
-            lampVkl3kV.setAttribute("src", "images/lamps/green_lamp.png");
-            lampVklPeredatchik.setAttribute("src", "images/lamps/red_lamp.png");
-            trMoshnost.setAttribute("class", "orangeActive");
-        }
-        else {
-            lampVkl3kV.setAttribute("src", "images/lamps/gray_lamp.png");
-            lampVklPeredatchik.setAttribute("src", "images/lamps/gray_lamp.png");
-            trMoshnost.setAttribute("class", "orangePassive");
-        }
-    };
-    this.DisplayVisokoe = function (value) {
-        if(value){
-            lampVklVisokoe.setAttribute("src", "images/lamps/green_lamp.png");
-        }
-        else {
-            lampVklVisokoe.setAttribute("src", "images/lamps/gray_lamp.png");
-        }
+    this.UpdateUmLabel = function () {
+        var label = document.getElementById('umLabel');
+        label.innerHTML=this.station.u;
     };
 }

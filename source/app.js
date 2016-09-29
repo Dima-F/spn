@@ -38,26 +38,18 @@ function run() {
         view.toggleDopoiskTumbler();
     };
     peredatchikTumbler.onclick = function () {
-        if(view.t_peredatchik){
-            view.togglePeredatchikTumbler();
-            if(station.peredachik){
-                station.peredachik = false;
-                view.refreshStatic(station);
-            }
-        }
-        else
+        if(station.peredachik)
         {
-            if(station.transmit()){
-                view.togglePeredatchikTumbler();
-                view.refreshStatic(station);
-            }
-            else{
-                alert('Передатчик не готов!');
+            station.peredachik=false;
+        }
+        else {
+            if(!station.trySetPeredatchik()){
+                alert('Передатчик не готов к включению!');
+                return;
             }
         }
-
+        view.togglePeredatchikTumbler();
     };
-    
     kanalyTumbler.onclick = function () {
         view.toggleKanalyTumbler();
     };
@@ -106,105 +98,146 @@ function run() {
         station.poluavtomat();
     };
     butSbrosVcu.onclick = function () {
-        if(station.started){
+        /*if(station.started){
             view.displayKanalyLampsOff();
             view.displaySectorLampsOff();
-        }
+        }*/
     };
     butSbrosInd.onclick = function () {
         if(station.started){
             view.displayKanalyLampsOff();
-            view.displaySectorLampsOff();
         }
     };
     butSbrosOb.onclick = function () {
         if(station.started){
-            view.displayKanalyLampsOff();
             view.displaySectorLampsOff();
         }
     };
 
     butVlevoMedleno.onmousedown = function () {
+        butVlevoMedleno.onmouseout = function () {
+            station.stopMove();
+        };
+        butVlevoMedleno.onmouseup = function () {
+            station.stopMove();
+        };
         station.vlevo(config.slowAz);
     };
-    butVlevoMedleno.onmouseup = function () {
-        station.stopMove();
-    };
+
     butVpravoMedleno.onmousedown = function () {
+        butVpravoMedleno.onmouseup = function () {
+            station.stopMove();
+        };
+        butVpravoMedleno.onmouseout = function () {
+            station.stopMove();
+        };
         station.vpravo(config.slowAz);
     };
-    butVpravoMedleno.onmouseup = function () {
-        station.stopMove();
-    };
+
     butVlevoBistro.onmousedown = function () {
+        butVlevoBistro.onmouseup = function () {
+            station.stopMove();
+        };
+        butVlevoBistro.onmouseout = function () {
+            station.stopMove();
+        };
         station.vlevo(config.fastAz);
     };
-    butVlevoBistro.onmouseup = function () {
-        station.stopMove();
-    };
+
     butVpravoBistro.onmousedown = function () {
+        butVpravoBistro.onmouseup = function () {
+            station.stopMove();
+        };
+        butVpravoBistro.onmouseout = function () {
+            station.stopMove();
+        };
         station.vpravo(config.fastAz);
     };
-    butVpravoBistro.onmouseup = function () {
-        station.stopMove();
-    };
+
     butVverhMedleno.onmousedown = function () {
+        butVverhMedleno.onmouseup = function () {
+            station.stopMove();
+        };
+        butVverhMedleno.onmouseout = function () {
+            station.stopMove();
+        };
         station.vverh(config.slowUm);
     };
-    butVverhMedleno.onmouseup = function () {
-        station.stopMove();
-    };
+
     butVverhBistro.onmousedown = function () {
+        butVverhBistro.onmouseup = function () {
+            station.stopMove();
+        };
+        butVverhBistro.onmouseout = function () {
+            station.stopMove();
+        };
         station.vverh(config.fastUm);
     };
-    butVverhBistro.onmouseup = function () {
-        station.stopMove();
-    };
+
     butVnizMedleno.onmousedown = function () {
+        butVnizMedleno.onmouseup = function () {
+            station.stopMove();
+        };
+        butVnizMedleno.onmouseout= function () {
+            station.stopMove();
+        };
         station.vniz(config.slowUm);
     };
-    butVnizMedleno.onmouseup = function () {
-        station.stopMove();
-    };
+
     butVnizBistro.onmousedown = function () {
+        butVnizBistro.onmouseup = function () {
+            station.stopMove();
+        };
+        butVnizBistro.onmouseout = function () {
+            station.stopMove();
+        };
         station.vniz(config.fastUm);
     };
-    butVnizBistro.onmouseup = function () {
-        station.stopMove();
-    };
+
     but360.onclick = function () {
         station.setSector(360);
     };
+
     but120.onclick = function () {
         station.setSector(120);
     };
+
     but90.onclick = function () {
         station.setSector(90);
     };
+
     but60.onclick = function () {
         station.setSector(60);
     };
+
     but20.onclick = function () {
         station.setSector(20);
     };
+
     but12.onclick = function () {
         station.setSector(12);
     };
+
     but6.onclick = function () {
         station.setSector(6);
     };
+
     butVidergka0.onclick = function () {
         station.setVidergka(0);
     };
+
     butVidergka5.onclick = function () {
         station.setVidergka(5);
     };
+
     butVidergka10.onclick = function () {
         station.setVidergka(10);
     };
+
     butVidergka20.onclick = function () {
         station.setVidergka(20);
     };
+
     butVidergka30.onclick = function () {
         station.setVidergka(30);
     };
