@@ -1,4 +1,9 @@
+var o = {
+    $a:55,
+    get b() {return this.$a;}
+};
 function run() {
+    console.log(o.b);
     var reo = new REO();
     reo.generateTargets(3);
     reo.printTargets();
@@ -7,7 +12,7 @@ function run() {
     view.displayKanalyLampsOff();
     view.generateSectorLamps();
     station.subscribe(view);
-    //event handlers---------------------------------------------------------------------------------------------------
+    //event handlers---------------------------
     stationTumbler.onclick = function () {
         view.toggleStationTumbler();
         station.toggleStart();
@@ -40,15 +45,16 @@ function run() {
     peredatchikTumbler.onclick = function () {
         if(station.peredachik)
         {
-            station.peredachik=false;
+            station.setPeredatchik(false);
         }
         else {
-            if(!station.trySetPeredatchik()){
+            if(!station.setPeredatchik(true)){
                 alert('Передатчик не готов к включению!');
                 return;
             }
         }
         view.togglePeredatchikTumbler();
+        view.refreshStatic();
     };
     kanalyTumbler.onclick = function () {
         view.toggleKanalyTumbler();

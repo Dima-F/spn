@@ -289,12 +289,12 @@ function View(station) {
     };
 
     this.refreshStatic = function () {
-        var vklNizkieAndRuchnoe = function () {
+        var drawNizkieAndRuchnoe = function () {
             lampVklNizkoe.setAttribute("src", "images/lamps/green_lamp.png");
             //simplified
             lampVklRychnoe.setAttribute("src", "images/lamps/yellow_lamp.png");
         };
-        var vklAntenna = function () {
+        var drawAntenna = function () {
             if (self.station.currentAntenna == "a") {
                 lampAntAnt.setAttribute("src", "images/lamps/red_lamp.png");
                 lampAntEkv.setAttribute("src", "images/lamps/gray_lamp.png");
@@ -304,7 +304,8 @@ function View(station) {
                 lampAntEkv.setAttribute("src", "images/lamps/green_lamp.png");
             }
         };
-        var vklEmu = function () {
+
+        var drawEmu = function () {
             if (self.station.emuAzimut) {
                 lampEmuAz.setAttribute("src", "images/lamps/yellow_lamp.png");
             }
@@ -318,7 +319,7 @@ function View(station) {
                 lampEmuUm.setAttribute("src", "images/lamps/gray_lamp.png");
             }
         };
-        var vklDiagrams = function () {
+        var drawDiagrams = function () {
             if(station.currentDiagrams=="w"){
                 trDiagramuUzkie.setAttribute("class", "orangePassive");
                 trDiagramuShirokie.setAttribute("class", "orangeActive");
@@ -328,7 +329,7 @@ function View(station) {
                 trDiagramuShirokie.setAttribute("class", "orangePassive");
             }
         };
-        var vklVidUpr = function () {
+        var drawVidUpr = function () {
             if(station.currentVidUpravleniya=="vcu"){
                 trAvtonomno.setAttribute("class", "orangePassive");
                 trAvtonomno2.setAttribute("class", "greenPassive");
@@ -342,7 +343,7 @@ function View(station) {
                 trVcu2.setAttribute("class", "greenPassive");
             }
         };
-        var vklVisokoe = function () {
+        var drawVisokoe = function () {
             if(self.station.visokoe){
                 lampVklVisokoe.setAttribute("src", "images/lamps/green_lamp.png");
             }
@@ -350,22 +351,17 @@ function View(station) {
                 lampVklVisokoe.setAttribute("src", "images/lamps/gray_lamp.png");
             }
         };
-        var vklPeredatchick = function () {
+        var drawPeredatchick = function () {
             if(station.peredachik){
                 lampVklPeredatchik.setAttribute("src", "images/lamps/red_lamp.png");
-                if(station._3kV){
-                    lampAvariyaVzs.setAttribute("src", "images/lamps/gray_lamp.png");
-                }
-                else {
-                    lampAvariyaVzs.setAttribute("src", "images/lamps/red_lamp.png");
-                }
             }
             else {
                 lampVklPeredatchik.setAttribute("src", "images/lamps/gray_lamp.png");
             }
         };
-        var vklPomeha = function () {
-            if(station.peredachik && station._3kV){
+
+        var drawPomeha = function () {
+            if(station._3kV){
                 lampVkl3kV.setAttribute("src", "images/lamps/green_lamp.png");
                 trMoshnost.setAttribute("class", "orangeActive");
             }
@@ -374,7 +370,15 @@ function View(station) {
                 trMoshnost.setAttribute("class", "orangePassive");
             }
         };
-        var vklAction = function () {
+        var drawAvariyaVzs = function () {
+            if(station.avariyaVzs){
+                lampAvariyaVzs.setAttribute("src", "images/lamps/red_lamp.png");
+            }
+            else {
+                lampAvariyaVzs.setAttribute("src", "images/lamps/gray_lamp.png");
+            }
+        };
+        var drawAction = function () {
             switch(station.currentRegum){
                 case "pa":
                     //poluavtomat
@@ -436,16 +440,16 @@ function View(station) {
         }
         else {
             //each of methods depends on concrete situation
-            vklNizkieAndRuchnoe();
-            vklAntenna();
-            vklEmu();
-            vklDiagrams();
-            vklVidUpr();
-            vklVisokoe();
-            vklPeredatchick();
-            vklPomeha();
-            vklAction();
-
+            drawNizkieAndRuchnoe();
+            drawAntenna();
+            drawEmu();
+            drawDiagrams();
+            drawVidUpr();
+            drawVisokoe();
+            drawPeredatchick();
+            drawAvariyaVzs();
+            drawPomeha();
+            drawAction();
         }
     };
 

@@ -10,7 +10,8 @@ function Station(reo) {
     this.avariyaAk = false;
     this.avariyaVzs = false;
     this.visokoe = false;
-    this._3kV = false;//podavlenie
+    this._3kV = false;
+    this.soprovogdenie = false;
     this.peredachik = false;
     this.emuAzimut = false;
     this.emuUgolMesta = false;
@@ -38,8 +39,10 @@ function Station(reo) {
     };
     this.updateR = function () {
         this.view.refreshRotation();
+        this.updateS();
         if(this.currentRegum!="pa" && !this.soprovogdenie)
             this.resive();
+
     };
     this.subscribe = function (view) {
         this.view = view;
@@ -257,12 +260,24 @@ function Station(reo) {
             this.vidergka = val;
         }
     };
-    this.trySetPeredatchik = function () {
+    this.setPeredatchik = function (flag) {
+        if(flag){
             if(this.started && this.visokoe){
                 this.peredachik=true;
+                if(this.soprovogdenie){
+                    this._3kV=true;
+                }
+                this.avariyaVzs = !this._3kV;
                 return true;
             }
-        return false;
+            return false;
+        }
+        else {
+            this.peredachik=false;
+            this._3kV = false;
+            this.avariyaVzs = false;
+        }
+            
     };
 
     //regums
@@ -271,7 +286,7 @@ function Station(reo) {
             return;
         }
         if (this.currentRegum == "av") {
-            alert("ПУстановите режим 'Обзор' из режима 'Полуавтомат'");
+            alert("Установите режим 'Обзор' из режима 'Полуавтомат'");
             return;
         }
         var self = this;
@@ -304,10 +319,11 @@ function Station(reo) {
     this.poluavtomat = function () {
         if (!this.started)
             return;
+        this.clearTimersAngles();
         this.currentRegum = "pa";
         this.poiskDirection = "z";
         this.updateS();
-        this.clearTimersAngles();
+
     };
     this.avtomat = function () {
         if (!this.visokoe || !this.emuAzimut || !this.emuUgolMesta || this.currentRegum == "av") {
@@ -379,7 +395,6 @@ function Station(reo) {
         }
         else
             protu(self.currentSector / 2);
-
     };
     this.poiskU = function () {
         var counter = 0;
@@ -458,21 +473,27 @@ function Station(reo) {
     this.startSoprovogdenie = function () {
         var self=this;
         self.soprovogdenie=true;
-        self._3kV = true;
+        if(self.visokoe && self.peredachik){
+            self._3kV = true;
+            self.avariyaVzs = false;
+        }
         self.updateS();
         var direction = Math.random();
         self.idSoprovogdeniya = setInterval(function () {
             direction>0.5?self.left():self.right();
         },2500);
-        self.idStopSoprovogdeniya = setTimeout(function () {
+        setTimeout(function () {
             self.stopSoprovogdeniya ();
         },config.timeSoprovogdeniya*1000);
     };
     this.stopSoprovogdeniya = function () {
         var self=this;
-        clearInterval(self.idSoprovogdeniya);
+        this.clearTimersAngles();
         self.soprovogdenie=false;
         self._3kV = false;
+        if(self.peredachik){
+            self.avariyaVzs=true;
+        }
         self.updateS();
         self.currentRegum = "pa";
         self.avtomat();
