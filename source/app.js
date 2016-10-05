@@ -1,9 +1,4 @@
-var o = {
-    $a:55,
-    get b() {return this.$a;}
-};
 function run() {
-    console.log(o.b);
     var reo = new REO();
     reo.generateTargets(3);
     reo.printTargets();
@@ -246,6 +241,12 @@ function run() {
 
     butVidergka30.onclick = function () {
         station.setVidergka(30);
+    };
+    
+    butExstrapol.onclick = function () {
+        if(station.started){
+            station.setExstrapolation();
+        }
     };
 }
 window.onload=run;

@@ -13,6 +13,8 @@ function Station(reo) {
     this._3kV = false;
     this.soprovogdenie = false;
     this.peredachik = false;
+    this.exstrapolation = false;
+    this.exstrapolating = false;
     this.emuAzimut = false;
     this.emuUgolMesta = false;
     this.currentRegum = "pa";
@@ -29,7 +31,8 @@ function Station(reo) {
     this.idA = 0;
     this.idU = 0;
     this.idViderzka = 0;
-    this.idSoprovogdeniya = 0;
+    this.idSoprovogdenie = 0;
+    this.idExstrapolating = 0;
     this.reo = reo;
     this.view = null;
 
@@ -40,7 +43,7 @@ function Station(reo) {
     this.updateR = function () {
         this.view.refreshRotation();
         this.updateS();
-        if(this.currentRegum!="pa" && !this.soprovogdenie)
+        if(this.currentRegum!="pa" && !this.soprovogdenie && !this.exstrapolating)
             this.resive();
 
     };
@@ -279,6 +282,11 @@ function Station(reo) {
         }
             
     };
+    this.setExstrapolation = function () {
+        if(this.soprovogdenie){
+            this.exstrapolation = true;
+        }
+    };
 
     //regums
     this.obzor = function () {
@@ -440,7 +448,8 @@ function Station(reo) {
         clearInterval(this.idA);
         clearInterval(this.idU);
         clearTimeout(this.idViderzka);
-        clearInterval(this.idSoprovogdeniya);
+        clearInterval(this.idSoprovogdenie);
+        clearInterval(this.idExstrapolating);
     };
 
     //behavior
@@ -479,16 +488,19 @@ function Station(reo) {
         }
         self.updateS();
         var direction = Math.random();
-        self.idSoprovogdeniya = setInterval(function () {
+        self.idSoprovogdenie = setInterval(function () {
             direction>0.5?self.left():self.right();
         },2500);
         setTimeout(function () {
-            self.stopSoprovogdeniya ();
+            self.stopSoprovogdenie ();
+            if(self.exstrapolation){
+                self.startExstrapolation();
+            }
         },config.timeSoprovogdeniya*1000);
     };
-    this.stopSoprovogdeniya = function () {
+    this.stopSoprovogdenie = function () {
         var self=this;
-        this.clearTimersAngles();
+        self.clearTimersAngles();
         self.soprovogdenie=false;
         self._3kV = false;
         if(self.peredachik){
@@ -498,6 +510,30 @@ function Station(reo) {
         self.currentRegum = "pa";
         self.avtomat();
     };
+    //екстраполяция реализованая пока что без повторного нахождения цели
+    this.startExstrapolation = function () {
+        var self=this;
+        self.clearTimersAngles();
+        self.exstrapolating = true;
+        self.updateS();
+        var direction = Math.random();
+        self.idExstrapolating = setInterval(function () {
+            direction>0.5?self.left():self.right();
+        },2500);
+        setTimeout(function () {
+            self.stopExstrapolation ();
+        },10000);
+    };
+    this.stopExstrapolation = function () {
+        var self=this;
+        self.clearTimersAngles();
+        self.exstrapolating = false;
+        self.exstrapolation = false;
+        self.updateS();
+        self.currentRegum = "pa";
+        self.avtomat();
+    };
+
 }
 
 function Angle(a, u) {

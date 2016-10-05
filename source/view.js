@@ -35,6 +35,7 @@ var butVcu = document.getElementById("butVcu");
 var butAvt = document.getElementById("butAvt");
 var butUzkDiagram = document.getElementById("butUzkDiagram");
 var butShirDiagram = document.getElementById("butShirDiagram");
+var butExstrapol = document.getElementById("butExstrapol");
 var butObzor = document.getElementById("butObzor");
 var butAvtomat = document.getElementById("butAvtomat");
 var butPolyavtomat = document.getElementById("butPolyavtomat");
@@ -93,8 +94,33 @@ var trEkstrapolacia = document.getElementById("trEkstrapolacia");
 var trDiagramuUzkie = document.getElementById("trDiagramuUzkie");
 var trDiagramuShirokie = document.getElementById("trDiagramuShirokie");
 
+function SmartCanva(element, imgPath, type) {
+    element.width = 212;
+    element.height = 212;
+    var context = element.getContext('2d');
+    var picture = new Image();
+    picture.src = imgPath;
+    var drawPicture = function () {
+        if (type == "a") {
+            context.drawImage(picture, -100, -100);
+        } else {
+            context.drawImage(picture, -106, -106);
+        }
+    };
+    picture.onload = function () {
+        context.translate(106, 106);
+        drawPicture();
+    };
+    this.rotate = function(angle){
+        context.rotate(angle * Math.PI / 180);
+        context.clearRect(-106, -106, 212, 212);
+        drawPicture();
+    };
+}
 
 function View(station) {
+    this.azCanva = new SmartCanva(document.getElementById("azCanva"),'images/azimut.png','a');
+    this.umCanva = new SmartCanva(document.getElementById("umCanva"),'images/ugolmesta.png','u');
     this.station = station;
     //tumblers
     this.t_station = false;
@@ -304,7 +330,6 @@ function View(station) {
                 lampAntEkv.setAttribute("src", "images/lamps/green_lamp.png");
             }
         };
-
         var drawEmu = function () {
             if (self.station.emuAzimut) {
                 lampEmuAz.setAttribute("src", "images/lamps/yellow_lamp.png");
@@ -359,7 +384,6 @@ function View(station) {
                 lampVklPeredatchik.setAttribute("src", "images/lamps/gray_lamp.png");
             }
         };
-
         var drawPomeha = function () {
             if(station._3kV){
                 lampVkl3kV.setAttribute("src", "images/lamps/green_lamp.png");
@@ -376,6 +400,14 @@ function View(station) {
             }
             else {
                 lampAvariyaVzs.setAttribute("src", "images/lamps/gray_lamp.png");
+            }
+        };
+        var drawExtrapolation = function () {
+            if(station.exstrapolating){
+                trEkstrapolacia.setAttribute("class", "greenActive");
+            }
+            else {
+                trEkstrapolacia.setAttribute("class", "greenPassive");
             }
         };
         var drawAction = function () {
@@ -449,13 +481,15 @@ function View(station) {
             drawPeredatchick();
             drawAvariyaVzs();
             drawPomeha();
+            drawExtrapolation();
             drawAction();
         }
     };
 
     this.refreshRotation = function () {
-        RotateA(this.station.a - this.a0);
-        RotateU(this.station.u - this.u0);
+        
+        this.azCanva.rotate(this.station.a - this.a0);
+        this.umCanva.rotate(this.station.u - this.u0);
         this.a0 = this.station.a;
         this.u0 = this.station.u;
         this.UpdateUmLabel();
