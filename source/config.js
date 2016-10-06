@@ -1,7 +1,7 @@
 var config = {
     //время задержки АФС в мс
     slowAz:750,
-    slowUm:1000,
+    slowUm:800,
     fastAz:50,
     fastUm:150,
     obzorAz:50,
@@ -10,7 +10,6 @@ var config = {
     //время задержки загорания ламп в с
     delayAvariya:4,
     delayVisokoe:15,
-    
     //растояния до цели, в км
     minDistance:50,
     maxDistance:250,
@@ -19,8 +18,8 @@ var config = {
     //используется при поиске цели
     deltaUzkie:2,
     deltaShirokie:5,
-    //время сопровождения в с
-    timeSoprovogdeniya:20,
+    //время сопровождения в с, если не нажата кнопка "Выдержка АС"
+    timeSoprovogdeniya:45,
     //максимально возможный угол места цели относительно станции
     //для возможности осуществления поиска.
     relativeMaxUmZone1:11,

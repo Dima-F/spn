@@ -89,14 +89,19 @@ function Station(reo) {
         this.started = false;
         this.peredachik = false;
         this._3kV = false;
+        this.avariyaVzs = false;
+        this.avariyaAk = false;
         this.visokoe = false;
         this.nizkoe = false;
         this.soprovogdenie=false;
+        this.exstrapolation = false;
+        this.exstrapolating = false;
         this.emuAzimut = false;
         this.emuUgolMesta = false;
         this.currentRegum = "pa";
         this.currentSector = 360;
         this.currentDiagrams = "w";
+        this.vidergka = 0;
         this.clearTimersLamps();
         this.clearTimersAngles();
         //для азимута и угла места сброс не требуется, т. к. антена сохраняет свое положение
@@ -488,6 +493,7 @@ function Station(reo) {
         }
         self.updateS();
         var direction = Math.random();
+        var vidergkaTime = self.vidergka==0?config.timeSoprovogdeniya:self.vidergka;
         self.idSoprovogdenie = setInterval(function () {
             direction>0.5?self.left():self.right();
         },2500);
@@ -496,7 +502,7 @@ function Station(reo) {
             if(self.exstrapolation){
                 self.startExstrapolation();
             }
-        },config.timeSoprovogdeniya*1000);
+        },vidergkaTime*1000);
     };
     this.stopSoprovogdenie = function () {
         var self=this;

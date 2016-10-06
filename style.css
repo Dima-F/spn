@@ -115,8 +115,7 @@ td {
 #clock-div {
     float:left;
     height:100%;
-    width:40%;
-    /*background:url("images/clock.png") no-repeat center center;*/
+    width:35%;
 }
 #shetchik-div {
     float:left;
@@ -131,6 +130,7 @@ td {
 #narabotka-st, #narabotka-per {
     background-color: darkslategray;
     color : white;
+    border-radius:4px;
 }
 #emu-div{
     float:left;
@@ -311,4 +311,15 @@ td {
     height:50px;
     width:50px;
 }
-
+#myClock {
+    float:left;
+    background-color: darkslategray;
+    color:white;
+    margin-top: 35px;
+    margin-left:20px;
+    font-size: medium;
+    font-weight: bold;
+    border:2px solid gray;
+    border-radius:10px;
+    padding:3px;
+}
