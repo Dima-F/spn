@@ -173,22 +173,43 @@ function View(station) {
         }
     };
 
-    this.lightSector = function (angle, type) {
-        if (isNaN(angle) || angle > 359 || angle < 0 || (type != 1 && type != 2)) {
-            console.error('Wrong parameters in view.lightSector.');
+    this.lightSector = function (target) {
+        if (target instanceof Target) {
+            var id = target.type+ '_' + Math.floor(target.angle.a / 22.5);
+            document.getElementById(id).setAttribute('src', './images/lamps/yellow_lamp.png');
         }
         else {
-            var id = type+ '_' + Math.floor(angle / 22.5);
-            document.getElementById(id).setAttribute('src', './images/lamps/yellow_lamp.png');
+            throw new Error('Bad target in lightSector!');
+        }
+    };
+    
+    this.lightOffSector = function (target) {
+        if (target instanceof Target) {
+            var id = target.type+ '_' + Math.floor(target.angle.a / 22.5);
+            document.getElementById(id).setAttribute('src', './images/lamps/gray_lamp.png');
+        }
+        else {
+            throw new Error('Bad target in lightOffSector!');
         }
     };
 
-    this.lightKanal = function (number) {
-        if (number < 1 || number > 64)
-            return null;
-        else {
-            var elem = document.getElementById(number + "k");
+    this.lightChannel = function (target) {
+        if (target instanceof Target) {
+            var elem = document.getElementById(target.channel + "k");
             elem.setAttribute("src", "images/lamps/yellow_lamp.png");
+        }
+        else {
+            throw new Error('Bad target in lightChannel!');
+        }
+    };
+    
+    this.lightOffChannel = function (target) {
+        if (target instanceof Target) {
+            var elem = document.getElementById(target.channel + "k");
+            elem.setAttribute("src", "images/lamps/gray_lamp.png");
+        }
+        else {
+            throw new Error('Bad target in lightOffChannel!');
         }
     };
 
@@ -203,6 +224,7 @@ function View(station) {
         lampAntAnt.setAttribute("src", "images/lamps/gray_lamp.png");
         lampAntEkv.setAttribute("src", "images/lamps/gray_lamp.png");
         lampAvariyaAk.setAttribute("src", "images/lamps/gray_lamp.png");
+        lampAvariyaVzs.setAttribute("src", "images/lamps/gray_lamp.png");
     };
 
     this.displayTransparantsOff = function () {
@@ -315,13 +337,14 @@ function View(station) {
     };
 
     this.refreshStatic = function () {
+        var self = this;
         var drawNizkieAndRuchnoe = function () {
             lampVklNizkoe.setAttribute("src", "images/lamps/green_lamp.png");
             //simplified
             lampVklRychnoe.setAttribute("src", "images/lamps/yellow_lamp.png");
         };
         var drawAntenna = function () {
-            if (self.station.currentAntenna == "a") {
+            if (self.station.antenna) {
                 lampAntAnt.setAttribute("src", "images/lamps/red_lamp.png");
                 lampAntEkv.setAttribute("src", "images/lamps/gray_lamp.png");
             }
@@ -420,6 +443,8 @@ function View(station) {
                     trSoprovogdenie.setAttribute("class", "greenPassive");
                     trOdinochnaya.setAttribute("class", "orangePassive");
                     trOdinochnaya2.setAttribute("class", "greenPassive");
+                    self.displayKanalyLampsOff();
+                    self.displaySectorLampsOff();
                     break;
                 case "ob":
                     if (station.currentSector == 360) {
@@ -460,11 +485,8 @@ function View(station) {
                     }
                     break;
                 default:throw new Error('Undefined regum!');
-            };
+            }
         };
-            
-
-        var self = this;
         if (!self.station.started) {
             this.displayLampsOff();
             this.displayTransparantsOff();
@@ -499,17 +521,9 @@ function View(station) {
         var label = document.getElementById('umLabel');
         label.innerHTML=this.station.u;
     };
-
-    this.timer = setInterval(function() {
-        var d = new Date(),
-            h = (d.getHours()<10?'0':'') + d.getHours(),
-            m = (d.getMinutes()<10?'0':'') + d.getMinutes();
-        return h + ':' + m;
-    },1000);
 }
 // clock
 (function() {
-
     var clock = document.getElementById('myClock');
     // But there is a little problem
     // we need to pad 0-9 with an extra
@@ -517,16 +531,13 @@ function View(station) {
     var pad = function(x) {
         return x < 10 ? '0'+x : x;
     };
-    var ticktock = function() {
+    var ticktock;
+    ticktock = function () {
         var d = new Date();
-        var h = pad( d.getHours() );
-        var m = pad( d.getMinutes() );
-        var s = pad( d.getSeconds() );
-
-        var current_time = [h,m,s].join(':');
-
-        clock.innerHTML = current_time;
-
+        var h = pad(d.getHours());
+        var m = pad(d.getMinutes());
+        var s = pad(d.getSeconds());
+        clock.innerHTML = [h, m, s].join(':');
     };
     ticktock();
     // Calling ticktock() every 1 second

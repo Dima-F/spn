@@ -1,6 +1,9 @@
 function run() {
     var reo = new REO();
-    reo.generateTargets(3);
+    reo.generateTargets(5);
+    setInterval(function () {
+        reo.printTargets();
+    },10000);
     reo.printTargets();
     var station = new Station(reo);
     var view = new View(station);

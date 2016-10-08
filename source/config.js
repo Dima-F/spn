@@ -13,15 +13,19 @@ var config = {
     //растояния до цели, в км
     minDistance:50,
     maxDistance:250,
-    //время жизни цели в мин.
-    expirationTime:3,
+    //время жизни цели в c.
+    liveTarget:120,
+    //частота появления новой цели в рео
+    frequencyTarget:80,
     //используется при поиске цели
     deltaUzkie:2,
     deltaShirokie:5,
     //время сопровождения в с, если не нажата кнопка "Выдержка АС"
-    timeSoprovogdeniya:45,
+    timeSoprovogdeniya:30,
     //максимально возможный угол места цели относительно станции
     //для возможности осуществления поиска.
     relativeMaxUmZone1:11,
-    relativeMaxUmZone2:30
+    relativeMaxUmZone2:30,
+    //время в с через которое проверяется в РЕО время жизни цели для удаления.
+    deletingTargetInterval:10
 };

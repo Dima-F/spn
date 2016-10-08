@@ -4,7 +4,9 @@ function Station(reo) {
     var idVisokoe = 0;
 
     //properties
+
     this.view = null;
+    this.antenna = true;//if ekvivalent - then false
     this.started = false;
     this.nizkoe = false;
     this.avariyaAk = false;
@@ -21,7 +23,7 @@ function Station(reo) {
     this.currentVidUpravleniya = "avt";
     this.currentSector = 360;
     this.currentDiagrams = "w";
-    this.currentAntenna = "a";
+
     this.vidergka = 0;//can be 0,5,10,20,30
 
     this.a = 0;
@@ -66,7 +68,7 @@ function Station(reo) {
         }
     };
     this.toggleAntenna = function () {
-        this.currentAntenna = this.currentAntenna !== "a" ? "a" : "e";
+        this.antenna = !this.antenna;
     };
     this.prepareVisokoe = function () {
         var self = this;
@@ -87,6 +89,7 @@ function Station(reo) {
     };
     this.reset = function () {
         this.started = false;
+        this.antenna = true;
         this.peredachik = false;
         this._3kV = false;
         this.avariyaVzs = false;
@@ -285,7 +288,6 @@ function Station(reo) {
             this._3kV = false;
             this.avariyaVzs = false;
         }
-            
     };
     this.setExstrapolation = function () {
         if(this.soprovogdenie){
@@ -332,6 +334,12 @@ function Station(reo) {
     this.poluavtomat = function () {
         if (!this.started)
             return;
+        if(this.soprovogdenie){
+            self._3kV = false;
+            if(self.peredachik){
+                self.avariyaVzs=true;
+            }
+        }
         this.clearTimersAngles();
         this.currentRegum = "pa";
         this.poiskDirection = "z";
@@ -459,18 +467,20 @@ function Station(reo) {
 
     //behavior
     this.resive = function () {
-        if (!this.started || !this.nizkoe)
+        if (!this.started || !this.nizkoe || !this.reo)
             return;
-        if (!this.reo || this.reo.targets.length == 0)
+        var onlineTargets = this.reo.getOnlineTargets();
+        if (onlineTargets.length == 0)
             return;
-        for (var i = 0; i < this.reo.targets.length; i++) {
-            var target = this.reo.targets[i];
+        
+        for (var i = 0; i < onlineTargets.length; i++) {
+            var target = onlineTargets[i];
             if (this.find(target)) {
-                this.view.lightSector(target.angle.a, target.type);
-                this.view.lightKanal(target.channel);
+                this.view.lightSector(target);
+                this.view.lightChannel(target);
                 if(this.currentRegum=="av"){
                     this.clearTimersAngles();
-                    this.startSoprovogdenie();
+                    this.startSoprovogdenie(target);
                 }
             }
         }
@@ -484,7 +494,7 @@ function Station(reo) {
             &&
             seeZone === target.zone);
     };
-    this.startSoprovogdenie = function () {
+    this.startSoprovogdenie = function (target) {
         var self=this;
         self.soprovogdenie=true;
         if(self.visokoe && self.peredachik){
@@ -492,19 +502,28 @@ function Station(reo) {
             self.avariyaVzs = false;
         }
         self.updateS();
-        var direction = Math.random();
         var vidergkaTime = self.vidergka==0?config.timeSoprovogdeniya:self.vidergka;
         self.idSoprovogdenie = setInterval(function () {
-            direction>0.5?self.left():self.right();
+            switch(target.direction){
+                case 1:self.right();break;
+                case -1:self.left();break;
+                case 0:break;
+                default:throw new Error("Wrong direction of target!");
+            }
+            //fact of target suppressing
+            if(self._3kV && self.antenna){
+                target.supressed = true;
+            }
         },2500);
         setTimeout(function () {
-            self.stopSoprovogdenie ();
+            self.stopSoprovogdenie (target);
+            self.avtomat();
             if(self.exstrapolation){
-                self.startExstrapolation();
+                self.startExstrapolation(target);
             }
         },vidergkaTime*1000);
     };
-    this.stopSoprovogdenie = function () {
+    this.stopSoprovogdenie = function (target) {
         var self=this;
         self.clearTimersAngles();
         self.soprovogdenie=false;
@@ -512,20 +531,23 @@ function Station(reo) {
         if(self.peredachik){
             self.avariyaVzs=true;
         }
+        this.view.lightOffSector(target);
+        this.view.lightOffChannel(target);
         self.updateS();
         self.currentRegum = "pa";
-        self.avtomat();
     };
-    //екстраполяция реализованая пока что без повторного нахождения цели
-    this.startExstrapolation = function () {
+    //екстраполяция реализованая пока что возможности нахождения цели
+    this.startExstrapolation = function (target) {
         var self=this;
         self.clearTimersAngles();
         self.exstrapolating = true;
         self.updateS();
-        var direction = Math.random();
-        self.idExstrapolating = setInterval(function () {
-            direction>0.5?self.left():self.right();
-        },2500);
+        switch(target.direction){
+            case 1:self.right();break;
+            case -1:self.left();break;
+            case 0:break;
+            default:throw new Error("Wrong direction of target!");
+        }
         setTimeout(function () {
             self.stopExstrapolation ();
         },10000);
@@ -547,7 +569,20 @@ function Angle(a, u) {
     this.u = u;
 }
 
-function Target(channel, type, zone, expiration) {
+function Target(channel, type, zone, startTime, liveTime) {
+
+    this.angle = null;
+    this.online = false;
+    this.liveTime = liveTime;
+    this.startTime = startTime;
+    this.direction = function () {
+        var r = Math.random();
+        if(r<0.4)return 1;
+        if(r>0.6)return -1;
+        return 0;
+    }();
+    this.supressed = false;
+
     this.setChannel = function(value){
         if(isNaN(value)|| value<1 || value>64)
             throw new Error('Wrong channel in target.');
@@ -555,6 +590,7 @@ function Target(channel, type, zone, expiration) {
             this.channel=value;
         }
     };
+    //angle is depending on zone!
     this.setAngle = function (angle) {
         if(angle instanceof Angle){
             if(angle.a<0 || angle.a>359)
@@ -579,29 +615,27 @@ function Target(channel, type, zone, expiration) {
         }
         else throw new Error('Wrong type in target.');
     };
-    this.expiration = expiration;
+    this.apear = function () {
+        var self=this;
+        setTimeout(function(){
+            self.online=true;
+            setTimeout(function () {
+                self.online=false;
+            },self.liveTime*1000);
+        },self.startTime*1000);
+    };
+
 
     this.setChannel(channel);
-    //angle is depending on zone!
-    this.angle = null;
     //1-rls weapon (outer),2-rls bo (inner)
     this.setType(type);
     //1 < more than 100km, 2 - less then 100km
     this.setZone(zone);
+    this.apear();
 }
 
 function REO() {
     this.targets = [];
-    this.generateTargets = function (amount) {
-        if (isNaN(amount))
-            return;
-        this.targets = [];
-        for (var i = 0; i < amount; i++) {
-            this.targets[i] = new Target(getChannel(), getType(), getZone(), getExpiration());
-            //todo:ugly code!!!
-            this.targets[i].setAngle(getAngle(this.targets[i]));
-        }
-    };
     var getChannel = function () {
         return Math.floor(Math.random() * 65);
     };
@@ -625,13 +659,26 @@ function REO() {
     var getZone = function () {
         return Math.random() > 0.5 ? 1 : 2;
     };
-    /*var getDistance = function () {
-        if (config)
-            return Math.floor(config.minDistance + Math.random() * (config.maxDistance - config.minDistance + 1));
-    };*/
-    var getExpiration = function () {
-        if (config)
-            return config.expirationTime;
+
+    this.generateTargets = function (amount) {
+        if (isNaN(amount))
+            return;
+        this.targets = [];
+        for (var i = 0; i < amount; i++) {
+            this.targets[i] = new Target(getChannel(), getType(), getZone(),i*config.frequencyTarget,config.liveTarget);
+            //todo:ugly code!!!
+            this.targets[i].setAngle(getAngle(this.targets[i]));
+        }
+    };
+    this.getOnlineTargets = function () {
+        return this.targets.filter(function (t) {
+            return t.online;
+        });
+    };
+    this.getSuppressedTargets = function () {
+        return this.targets.filter(function (t) {
+            return t.supressed;
+        });
     };
     this.printTargets = function () {
         var self = this;
@@ -645,9 +692,14 @@ function REO() {
                     ' um:' + self.targets[i].angle.u +
                     ' type:' + self.targets[i].type +
                     ' zone:' + self.targets[i].zone +
-                    ' expiration:' + self.targets[i].expiration;
+                    ' start time:' + self.targets[i].startTime+
+                    ' live during:' + self.targets[i].liveTime+
+                    ' was suppressed:' + self.targets[i].supressed+
+                    ' online: '+self.targets[i].online+
+                    ' direction: '+self.targets[i].direction;
                 console.log(info);
             }
+            console.log('/n');
         }
     };
 }
