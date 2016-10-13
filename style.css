@@ -276,41 +276,14 @@ td {
 }
 
 
-#box1 {
+#settings {
     position:fixed;
     top: 50px;
     left: 50px;
-    background-color:yellow;
-    height:50px;
-    width:50px;
+    width:74px;
+    height:74px;
 }
 
-#box2 {
-    position:absolute;
-    top: 50px;
-    right: 50px;
-    background-color:green;
-    height:50px;
-    width:50px;
-}
-
-#box3 {
-    position:absolute;
-    bottom: 50px;
-    right: 50px;
-    background-color:orange;
-    height:50px;
-    width:50px;
-}
-
-#box4 {
-    position:absolute;
-    bottom: 50px;
-    left: 50px;
-    background-color:red;
-    height:50px;
-    width:50px;
-}
 #myClock {
     float:left;
     background-color: darkslategray;

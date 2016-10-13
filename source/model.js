@@ -47,7 +47,6 @@ function Station(reo) {
         this.updateS();
         if(this.currentRegum!="pa" && !this.soprovogdenie && !this.exstrapolating)
             this.resive();
-
     };
     this.subscribe = function (view) {
         this.view = view;
@@ -58,19 +57,6 @@ function Station(reo) {
         this.started = true;
         this.nizkoe = true;
         this.avariyaAk = true;
-        this.prepareVisokoe();
-    };
-    this.toggleStart = function () {
-        if (this.started) {
-            this.reset();
-        } else {
-            this.start();
-        }
-    };
-    this.toggleAntenna = function () {
-        this.antenna = !this.antenna;
-    };
-    this.prepareVisokoe = function () {
         var self = this;
         idAvariya = setTimeout(function () {
             if (!self.started) {
@@ -86,6 +72,16 @@ function Station(reo) {
                 self.updateS();
             }
         }, config.delayVisokoe * 1000);
+    };
+    this.toggleStart = function () {
+        if (this.started) {
+            this.reset();
+        } else {
+            this.start();
+        }
+    };
+    this.toggleAntenna = function () {
+        this.antenna = !this.antenna;
     };
     this.reset = function () {
         this.started = false;
@@ -472,7 +468,6 @@ function Station(reo) {
         var onlineTargets = this.reo.getOnlineTargets();
         if (onlineTargets.length == 0)
             return;
-        
         for (var i = 0; i < onlineTargets.length; i++) {
             var target = onlineTargets[i];
             if (this.find(target)) {
