@@ -124,7 +124,7 @@ function Station(reo) {
         if (!this.emuUgolMesta)
             return false;
         else {
-            if (this.u == 0)
+            if (this.u === 0)
                 return false;
             else {
                 this.u--;
@@ -466,7 +466,7 @@ function Station(reo) {
         if (!this.started || !this.nizkoe || !this.reo)
             return;
         var onlineTargets = this.reo.getOnlineTargets();
-        if (onlineTargets.length == 0)
+        if (onlineTargets.length === 0)
             return;
         for (var i = 0; i < onlineTargets.length; i++) {
             var target = onlineTargets[i];
@@ -483,10 +483,8 @@ function Station(reo) {
     this.find = function (target) {
         var deltaU = this.currentDiagrams=="w"?config.deltaShirokie:config.deltaUzkie;
         var seeZone = this.currentDiagrams=="w"? 2 : 1;
-        return (this.a == target.angle.a
-            &&
-                Math.abs(this.u-target.angle.u)<=deltaU
-            &&
+        return (this.a == target.angle.a &&
+                Math.abs(this.u-target.angle.u)<=deltaU &&
             seeZone === target.zone);
     };
     this.startSoprovogdenie = function (target) {
@@ -497,7 +495,7 @@ function Station(reo) {
             self.avariyaVzs = false;
         }
         self.updateS();
-        var vidergkaTime = self.vidergka==0?config.timeSoprovogdeniya:self.vidergka;
+        var vidergkaTime = self.vidergka===0?config.timeSoprovogdeniya:self.vidergka;
         self.idSoprovogdenie = setInterval(function () {
             switch(target.direction){
                 case 1:self.right();break;
@@ -677,7 +675,7 @@ function REO() {
     };
     this.printTargets = function () {
         var self = this;
-        if (self.targets.length == 0) {
+        if (self.targets.length === 0) {
             console.log("There are no targets in reo");
         }
         else {

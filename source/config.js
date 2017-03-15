@@ -6,7 +6,7 @@ var config = {
     fastUm:150,
     obzorAz:50,
     obzorUm:65,
-    
+
     //время задержки загорания ламп в с
     delayAvariya:4,
     delayVisokoe:15,
@@ -14,9 +14,9 @@ var config = {
     minDistance:50,
     maxDistance:250,
     //время жизни цели в c.
-    liveTarget:120,
+    liveTarget:200,
     //частота появления новой цели в рео
-    frequencyTarget:80,
+    frequencyTarget:150,
     //используется при поиске цели
     deltaUzkie:2,
     deltaShirokie:5,
@@ -27,5 +27,7 @@ var config = {
     relativeMaxUmZone1:11,
     relativeMaxUmZone2:30,
     //время в с через которое проверяется в РЕО время жизни цели для удаления.
-    deletingTargetInterval:10
+    deletingTargetInterval:10,
+    //время в с обновления консоли вывода целей
+    consoleUpdating:30
 };

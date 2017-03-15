@@ -150,7 +150,7 @@ function View(station) {
                 newDiv.setAttribute('style', 'top:' + Math.floor(x) + 'px' + ';' + 'left:' + Math.floor(y) + 'px' + ';');
                 var newImg = document.createElement('img');
                 newImg.src = "./images/lamps/gray_lamp.png";
-                newImg.id = (j == 0) ? "2_" + i : "1_" + i;
+                newImg.id = (j === 0) ? "2_" + i : "1_" + i;
                 newDiv.appendChild(newImg);
                 container.appendChild(newDiv);
             }
@@ -182,7 +182,7 @@ function View(station) {
             throw new Error('Bad target in lightSector!');
         }
     };
-    
+
     this.lightOffSector = function (target) {
         if (target instanceof Target) {
             var id = target.type+ '_' + Math.floor(target.angle.a / 22.5);
@@ -202,7 +202,7 @@ function View(station) {
             throw new Error('Bad target in lightChannel!');
         }
     };
-    
+
     this.lightOffChannel = function (target) {
         if (target instanceof Target) {
             var elem = document.getElementById(target.channel + "k");
@@ -341,7 +341,7 @@ function View(station) {
         var drawNizkieAndRuchnoe = function () {
             lampVklNizkoe.setAttribute("src", "images/lamps/green_lamp.png");
             //simplified
-            lampVklRychnoe.setAttribute("src", "images/lamps/yellow_lamp.png");
+            //lampVklRychnoe.setAttribute("src", "images/lamps/yellow_lamp.png");
         };
         var drawAntenna = function () {
             if (self.station.antenna) {
@@ -509,7 +509,6 @@ function View(station) {
     };
 
     this.refreshRotation = function () {
-        
         this.azCanva.rotate(this.station.a - this.a0);
         this.umCanva.rotate(this.station.u - this.u0);
         this.a0 = this.station.a;
