@@ -3,7 +3,7 @@ function run() {
     reo.generateTargets(5);
     setInterval(function () {
         reo.printTargets();
-    },10000);
+    },config.consoleUpdating*1000);
     reo.printTargets();
     var station = new Station(reo);
     var view = new View(station);
@@ -12,9 +12,10 @@ function run() {
     station.subscribe(view);
     //event handlers---------------------------
     stationTumbler.onclick = function () {
+        reo.printTargets();
         view.toggleStationTumbler();
         station.toggleStart();
-        view.refreshStatic(station);   
+        view.refreshStatic(station);
     };
     antennaTumbler.onclick = function () {
         if(station.started){
@@ -257,7 +258,7 @@ function run() {
         station.setVidergka(30);
         view.refreshStatic(station);
     };
-    
+
     butExstrapol.onclick = function () {
         if(station.started){
             station.setExstrapolation();
