@@ -641,10 +641,6 @@ function View(station) {
     };
 
     this.refreshRotation = function () {
-<<<<<<< HEAD
-
-=======
->>>>>>> 0f9f1252d1228ffca26084e34e94d7ffafb61e1a
         this.azCanva.rotate(this.station.a - this.a0);
         this.umCanva.rotate(this.station.u - this.u0);
         this.a0 = this.station.a;
