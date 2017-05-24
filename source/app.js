@@ -201,50 +201,62 @@ function run() {
 
     but360.onclick = function () {
         station.setSector(360);
+        view.refreshStatic(station);
     };
 
     but120.onclick = function () {
         station.setSector(120);
+        view.refreshStatic(station);
     };
 
     but90.onclick = function () {
         station.setSector(90);
+        view.refreshStatic(station);
     };
 
     but60.onclick = function () {
         station.setSector(60);
+        view.refreshStatic(station);
     };
 
     but20.onclick = function () {
         station.setSector(20);
+        view.refreshStatic(station);
     };
 
     but12.onclick = function () {
         station.setSector(12);
+        view.refreshStatic(station);
     };
 
     but6.onclick = function () {
         station.setSector(6);
+        view.refreshStatic(station);
     };
 
     butVidergka0.onclick = function () {
         station.setVidergka(0);
+        view.refreshStatic(station);
     };
 
     butVidergka5.onclick = function () {
         station.setVidergka(5);
+        view.refreshStatic(station);
     };
 
     butVidergka10.onclick = function () {
         station.setVidergka(10);
+        view.refreshStatic(station);
     };
 
     butVidergka20.onclick = function () {
         station.setVidergka(20);
+        view.refreshStatic(station);
     };
 
     butVidergka30.onclick = function () {
         station.setVidergka(30);
+        view.refreshStatic(station);
     };
 
     butExstrapol.onclick = function () {

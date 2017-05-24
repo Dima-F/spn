@@ -1,3 +1,4 @@
+
 function Station(reo) {
     //private members
     var idAvariya = 0;
@@ -19,8 +20,8 @@ function Station(reo) {
     this.exstrapolating = false;
     this.emuAzimut = false;
     this.emuUgolMesta = false;
-    this.currentRegum = "pa";
-    this.currentVidUpravleniya = "avt";
+    this.currentRegum = "pa";//can be 'pa','ob','av'
+    this.currentVidUpravleniya = "avt";//can be 'avt','vcu'
     this.currentSector = 360;
     this.currentDiagrams = "w";
 
@@ -28,7 +29,7 @@ function Station(reo) {
 
     this.a = 0;
     this.u = 0;
-    this.poiskDirection = "z";
+    this.poiskDirection = "z";//can be 'z', 'p'
 
     this.idA = 0;
     this.idU = 0;
@@ -155,6 +156,7 @@ function Station(reo) {
             return true;
         }
     };
+
     this.vverh = function (delay) {
         if (this.currentRegum != "pa") {
             alert('Текущий режим работы не полуавтомат!');

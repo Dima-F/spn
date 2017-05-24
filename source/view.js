@@ -487,6 +487,137 @@ function View(station) {
                 default:throw new Error('Undefined regum!');
             }
         };
+        var drawShadows = function(){
+            switch(station.currentSector){
+                case 360:
+                    but360.className='shadow';
+                    but120.className='';
+                    but90.className='';
+                    but60.className='';
+                    but20.className='';
+                    but12.className='';
+                    but6.className='';
+                    break;
+                case 120:
+                    but360.className='';
+                    but120.className='shadow';
+                    but90.className='';
+                    but60.className='';
+                    but20.className='';
+                    but12.className='';
+                    but6.className='';
+                    break;
+                case 90:
+                    but360.className='';
+                    but120.className='';
+                    but90.className='shadow';
+                    but60.className='';
+                    but20.className='';
+                    but12.className='';
+                    but6.className='';
+                    break;
+                case 60:
+                    but360.className='';
+                    but120.className='';
+                    but90.className='';
+                    but60.className='shadow';
+                    but20.className='';
+                    but12.className='';
+                    but6.className='';
+                    break;
+                case 20:
+                    but360.className='';
+                    but120.className='';
+                    but90.className='';
+                    but60.className='';
+                    but20.className='shadow';
+                    but12.className='';
+                    but6.className='';
+                    break;
+                case 12:
+                    but360.className='';
+                    but120.className='';
+                    but90.className='';
+                    but60.className='';
+                    but20.className='';
+                    but12.className='shadow';
+                    but6.className='';
+                    break;
+                case 6:
+                    but360.className='';
+                    but120.className='';
+                    but90.className='';
+                    but60.className='';
+                    but20.className='';
+                    but12.className='';
+                    but6.className='shadow';
+                    break;
+            }
+            switch(station.currentRegum){
+                case 'pa':
+                    butPolyavtomat.className='shadow';
+                    butAvtomat.className='';
+                    butObzor.className='';
+                    break
+                case 'ob':
+                    butPolyavtomat.className='';
+                    butAvtomat.className='';
+                    butObzor.className='shadow';
+                    break;
+                case 'av':
+                    butPolyavtomat.className='';
+                    butAvtomat.className='shadow';
+                    butObzor.className='';
+                    break;
+            }
+            switch(station.currentVidUpravleniya){
+                case 'avt':
+                    butAvt.className='shadow';
+                    butVcu.className='';
+                    break;
+                case 'vcu':
+                    butAvt.className='';
+                    butVcu.className='shadow';
+                    break;
+            }
+            switch(station.vidergka){
+                case 0:
+                    butVidergka0.className='shadow';
+                    butVidergka5.className='';
+                    butVidergka10.className='';
+                    butVidergka20.className='';
+                    butVidergka30.className='';
+                    break
+                case 5:
+                    butVidergka0.className='';
+                    butVidergka5.className='shadow';
+                    butVidergka10.className='';
+                    butVidergka20.className='';
+                    butVidergka30.className='';
+                    break;
+                case 10:
+                    butVidergka0.className='';
+                    butVidergka5.className='';
+                    butVidergka10.className='shadow';
+                    butVidergka20.className='';
+                    butVidergka30.className='';
+                    break;
+                case 20:
+                    butVidergka0.className='';
+                    butVidergka5.className='';
+                    butVidergka10.className='';
+                    butVidergka20.className='shadow';
+                    butVidergka30.className='';
+                    break;
+                case 30:
+                    butVidergka0.className='';
+                    butVidergka5.className='';
+                    butVidergka10.className='';
+                    butVidergka20.className='';
+                    butVidergka30.className='shadow';
+                    break;
+            }
+        };
         if (!self.station.started) {
             this.displayLampsOff();
             this.displayTransparantsOff();
@@ -505,6 +636,7 @@ function View(station) {
             drawPomeha();
             drawExtrapolation();
             drawAction();
+            drawShadows();
         }
     };
 
@@ -519,6 +651,11 @@ function View(station) {
     this.UpdateUmLabel = function () {
         var label = document.getElementById('umLabel');
         label.innerHTML=this.station.u;
+    };
+
+    this.markShadow = function(id){
+        document.getElementById(id).className='shadow';
+
     };
 }
 // clock

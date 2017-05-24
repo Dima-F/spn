@@ -30,4 +30,4 @@ var config = {
     deletingTargetInterval:10,
     //время в с обновления консоли вывода целей
     consoleUpdating:30
-};
+}
