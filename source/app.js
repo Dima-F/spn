@@ -1,6 +1,6 @@
 function run() {
     var reo = new REO();
-    reo.generateTargets(5);
+    reo.generateTargets(15);
     setInterval(function () {
         reo.printTargets();
     },config.consoleUpdating*1000);

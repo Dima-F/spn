@@ -14,9 +14,9 @@ var config = {
     minDistance:50,
     maxDistance:250,
     //время жизни цели в c.
-    liveTarget:200,
+    liveTarget:300,
     //частота появления новой цели в рео
-    frequencyTarget:150,
+    frequencyTarget:200,
     //используется при поиске цели
     deltaUzkie:2,
     deltaShirokie:5,
