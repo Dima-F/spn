@@ -632,7 +632,7 @@ function Target(channel, type, zone, startTime, liveTime) {
 function REO() {
     this.targets = [];
     var getChannel = function () {
-        return Math.floor(Math.random() * 65);
+        return Math.floor(Math.random() * 64)+1;
     };
     var getAngle = function (target) {
         var a = Math.floor(Math.random() * 360);
@@ -652,7 +652,7 @@ function REO() {
         return Math.random() > 0.5 ? 1 : 2;
     };
     var getZone = function () {
-        return Math.random() > 0.5 ? 1 : 2;
+        return Math.random() > 0.6 ? 1 : 2;
     };
 
     this.generateTargets = function (amount) {
