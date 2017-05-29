@@ -1,439 +1,612 @@
 <!DOCTYPE  html>
+
 <head>
-    <meta charset="utf-8">
-    <title>ПУ СПН-30</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8">
+  <title>ПУ СПН-30</title>
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
+
 <body>
-    <img class="vegas-background" src="images/bg.jpg" style="position: fixed; left: 0px; top: 0px;
+  <img class="vegas-background" src="images/bg.jpg" style="position: fixed; left: 0px; top: 0px;
             width: 1920px; height: 1080px; bottom: auto; right: auto;">
-        <div id="pult">
-        <div id="top" class="panel">
-            <div id="top-left" class="container">
-                <table id="avariya-table">
-                    <tr>
-                        <td colspan="3">АВАРИЯ</td><td colspan="3"></td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/lamps/gray_lamp.png"/></td><td><img src="images/lamps/gray_lamp.png"/></td><td><img src="images/lamps/gray_lamp.png"/></td>
-                        <td></td><td rowspan="3"><img id="antennaTumbler" src="images/tumblers/right_1.png"/></td><td></td>
-                    </tr>
-                    <tr>
-                        <td>система контроля</td><td>станция</td><td>комутатор</td>
-                        <td><img id="antennaLampEkv" src="images/lamps/gray_lamp.png"/></td><td><img id="antennaLampAnt" src="images/lamps/gray_lamp.png"/></td>
-                    </tr>
-                    <tr>
-                        <td><img id="lampAvariyaAk" src="images/lamps/gray_lamp.png"/></td><td><img id="lampAvariyaVzs" src="images/lamps/gray_lamp.png"/></td><td>
-                        <img src="images/lamps/gray_lamp.png"/></td>
-                        <td>эквивал.</td><td>антен.</td>
-                    </tr>
-                    <tr>
-                        <td>антен. колонка</td><td>взс</td><td>упор ум</td><td colspan="3"></td>
-                    </tr>
-                </table>
-                <table id="kontrol-table">
-                    <tr>
-                        <td>деблокировка</td><td rowspan="2"><img src="images/perekluch/1_.png"/></td><td>тренажер включен</td>
-                    </tr>
-                    <tr>
-                        <td><button></button></td><td><img src="images/lamps/gray_lamp.png"/></td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/perekluch/1_.png"/></td><td>проверка</td><td><img src="images/perekluch/1_.png"/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">ручной контроль</td>
-                    </tr>
-                    <tr>
-                        <td>самоконтроль</td><td>автоконтроль</td><td>сброс индикации контроля</td>
-                    </tr>
-                    <tr>
-                        <td><button></button></td><td><img id="avtokontrolTumbler" src="images/tumblers/off_1.png"/></td><td><button></button></td>
-                    </tr>
-                    <tr>
-                        <td></td><td>откл.</td><td></td>
-                    </tr>
-                </table>
-            </div>
-            <div id="top-center" class = "container">
-                <div id="clock-shetchik">
-                    <div id="clock-div">
-                        <label id="myClock"></label>
-                    </div>
-                    <div id="shetchik-div">
-                        <label>ВЕРМЯ НАРАБОТКИ</label>
-                        <table id="narabotka-table">
-                            <tr>
-                                <td>станция</td><td>передатч.</td>
-                            </tr>
-                            <tr>
-                                <td id="narabotka-st">00000</td><td id="narabotka-per">00000</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div>
-                    <div id="emu-div">
-                        <table id="table-emu">
-                            <tr>
-                                <td colspan="5">ВКЛЮЧЕНО</td>
-                            </tr>
-                            <tr>
-                                <td><img id="lampNizkoe" src="images/lamps/gray_lamp.png"/></td><td><img id="lampVisokoe" src="images/lamps/gray_lamp.png"/></td>
-                                <td><img id="lamp3kV" src="images/lamps/gray_lamp.png"/></td>
-                                <td><img id="lampPeretatchik" src="images/lamps/gray_lamp.png"/></td><td><img id="lampRychnoe" src="images/lamps/gray_lamp.png"/></td>
-                            </tr>
-                            <tr>
-                                <td>низкое</td><td>высокое</td><td>+3кВ</td><td>передатчик</td><td>ручное</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5">ЭМУ ВКЛЮЧЕНЫ</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><img src="images/lamps/gray_lamp.png" id="lamp-emu-az"/></td><td></td><td colspan="2"><img src="images/lamps/gray_lamp.png" id="lamp-emu-um"/></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">азимут</td><td></td><td colspan="2">угол места</td>
-                            </tr>
-                            <tr>
-                                <td><button id="emu-az-on"></button></td><td><button id="emu-az-off"></button></td><td></td>
-                                <td><button id="emu-um-on"></button></td><td><button id="emu-um-off"></button></td>
-                            </tr>
-                            <tr>
-                                <td>вкл.</td><td>откл.</td><td></td><td>вкл.</td><td>откл.</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div id="station-div">
-                        <div>
-                            <br/>
-                            <label>станция</label>
-                            <img id="img-station" src="images/tumblers/off_1.png"/>
-                            <label>откл.</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="top-right" class = "container">
-                <br/>
-                <label>КОНТРОЛЬ ИСТОЧНИКОВ ПИТАНИЯ</label>
-                <div id="top-right-1">
-                    <br/>
-                    <img src="images/amermetr.png" style="margin:5px;"/><br/>
-                    <img src="images/perekluch/1_.png"/><br/>
-                    контроль напряжения
-                </div>
-                <div id="top-right-2">
-                    <img src="images/perekluch/1_.png"/><br/>
-                    <img src="images/tablica_blokov.bmp"/>
-                </div>
-            </div>
-        </div>
-        <div id="center" class="panel">
-            <div id="transparants-1" class = "container">
-                <label>КАНАЛЫ</label>
-                <br/>
-                <table id="indicators-table">
-                    <tr>
-                        <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td>
-                        <td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td>
-                        <td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td>
-                        <td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td>32</td>
-                    </tr>
-                    <tr>
-                        <td><img id="1k"/></td><td><img id="2k"/></td><td><img id="3k"/></td><td><img id="4k"/></td><td><img id="5k"/></td><td><img id="6k"/></td>
-                        <td><img id="7k"/></td><td><img id="8k"/></td><td><img id="9k"/></td><td><img id="10k"/></td><td><img id="11k"/></td><td><img id="12k"/></td>
-                        <td><img id="13k"/></td><td><img id="14k"/></td><td><img id="15k"/></td><td><img id="16k"/></td><td><img id="17k"/></td><td><img id="18k"/></td>
-                        <td><img id="19k"/></td><td><img id="20k"/></td><td><img id="21k"/></td><td><img id="22k"/></td><td><img id="23k"/></td><td><img id="24k"/></td>
-                        <td><img id="25k"/></td><td><img id="26k"/></td><td><img id="27k"/></td><td><img id="28k"/></td><td><img id="29k"/></td><td><img id="30k"/></td>
-                        <td><img id="31k"/></td><td><img id="32k"/></td>
-                    </tr>
-                    <tr>
-                        <td>33</td><td>34</td><td>35</td><td>36</td><td>37</td><td>38</td><td>39</td><td>40</td>
-                        <td>41</td><td>42</td><td>43</td><td>44</td><td>45</td><td>46</td><td>47</td><td>48</td>
-                        <td>49</td><td>50</td><td>51</td><td>52</td><td>53</td><td>54</td><td>55</td><td>56</td>
-                        <td>57</td><td>58</td><td>59</td><td>60</td><td>61</td><td>62</td><td>63</td><td>64</td>
-                    </tr>
-                    <tr>
-                        <td><img id="33k"/></td><td><img id="34k"/></td><td><img id="35k"/></td><td><img id="36k"/></td><td><img id="37k"/></td><td><img id="38k"/></td>
-                        <td><img id="39k"/></td><td><img id="40k"/></td><td><img id="41k"/></td><td><img id="42k"/></td><td><img id="43k"/></td><td><img id="44k"/></td>
-                        <td><img id="45k"/></td><td><img id="46k"/></td><td><img id="47k"/></td><td><img id="48k"/></td><td><img id="49k"/></td><td><img id="50k"/></td>
-                        <td><img id="51k"/></td><td><img id="52k"/></td><td><img id="53k"/></td><td><img id="54k"/></td><td><img id="55k"/></td><td><img id="56k"/></td>
-                        <td><img id="57k"/></td><td><img id="58k"/></td><td><img id="59k"/></td><td><img id="60k"/></td><td><img id="61k"/></td><td><img id="62k"/></td>
-                        <td><img id="63k"/></td><td><img id="64k"/></td>
-                    </tr>
-                </table>
-                <table id="vcu-transparants">
-                    <tr><td colspan="12" style="border-style:none;background-color:inherit">ВЦУ</td> </tr>
-                    <tr>
-                        <td id="trVcu" class="orangePassive">РАБОТА ПО ВЦУ</td>
-                        <td id ="trAvtonomno" class="orangePassive">РАБОТА АВТОНОМ.</td>
-                        <td id="trVisokVkl" class="orangePassive">ВЫСОКОЕ ВКЛЮЧИТЬ</td>
-                        <td id="trNizkVkl" class="orangePassive">НИЗКОЕ ВКЛЮЧИТЬ</td>
-                        <td id="trOdinochnaya" class="orangePassive">ОДИНОЧНАЯ</td>
-                        <td id="trGrupa" class="orangePassive">ГРУППА</td>
-                        <td id="trZona1" class="orangePassive">ЗОНА 1</td>
-                        <td id="trZona2" class="orangePassive">ЗОНА 2</td>
-                        <td id="trZona3" class="orangePassive">ЗОНА 3</td>
-                        <td id="trDopoiskVkl" class="orangePassive">ДОПОИСК ВКЛЮЧИТЬ</td>
-                        <td id="trNovoeVcu" class="orangePassive">НОВОЕ ВЦУ</td>
-                        <td id="trBlank" class="orangePassive"> </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="vcu-div" class="container">
-                <div>
-                    <img src=""/>
-                    <label>АЗИМУТ</label>
-                </div>
-                <div>
-                    <br/>
-                    <label>ВЦУ</label><br/>
-                    <label>точно</label><br/>
-                    <img id="vcuTumbler" src="images/tumblers/on_1.png"/><br/>
-                    <label>грубо</label>
-                </div>
-                <div>
-                    <table id="sbros-indicacii-table">
-                        <tr><td colspan="3">СБРОС ИНДИКАЦИИ ВЦУ</td></tr>
-                        <tr><td colspan="3"><button id="butSbrosVcu"></button></td></tr>
-                        <tr><td colspan="3">ЗАПРЕТ КАНАЛОВ</td> </tr>
-                        <tr>
-                            <td><img src="images/lamps/gray_lamp.png"/></td>
-                            <td><button></button></td>
-                            <td><img src="images/lamps/gray_lamp.png"/></td>
-                        </tr>
-                        <tr>
-                            <td>ручной</td>
-                            <td>сброс</td>
-                            <td>автомат</td>
-                        </tr>
-                    </table>
-                </div>
-                <div>
-                    <br/>
-                    <label>допоиск</label><br/>
-                    <img id="dopoiskTumbler" src="images/tumblers/off_1.png"/><br/>
-                    <label>откл.</label>
-                </div>
-                <div>
-                    <img src=""/>
-                    <label>УГОЛ МЕСТА</label>
-                </div>
-            </div>
-            <div id="transparants-2" class="container">
-                <table id="regumraboty-transparants">
-                 <tr>
-                     <td colspan="12" style="border-style:none; background-color:inherit">РЕЖИМ РАБОТЫ</td>
-                 </tr>
-                <tr>
-                    <td id="trVcu2" class="greenPassive">РАБОТА ПО ВЦУ</td>
-                    <td id = "trAvtonomno2" class="greenPassive">РАБОТА АВТОНОМ.</td>
-                    <td id="trPoluAvtomat" class="greenPassive">ПОЛУАВ- ТОМАТ</td>
-                    <td id="trObzor" class="greenPassive">ОБЗОР</td>
-                    <td id="trPoisk" class="greenPassive">ПОИСК</td>
-                    <td id="trSoprovogdenie" class="greenPassive">СОПРОВОЖ- ДЕНИЕ</td>
-                    <td id="trOdinochnaya2" class="greenPassive">ОДИНОЧНАЯ</td>
-                    <td id="trGrupa2" class="greenPassive">ГРУППА</td>
-                    <td id="trMoshnost" class="orangePassive">МОЩНОСТЬ</td>
-                    <td id="trEkstrapolacia" class="greenPassive">ЭКСТРА- ПОЛЯЦИЯ</td>
-                    <td id="trDiagramuUzkie" class="orangePassive">ДИАГРАМЫ УЗКИЕ</td>
-                    <td id="trDiagramuShirokie" class="orangePassive">ДИАГРАМЫ ШИРОКИЕ</td>
-                </tr>
+  <div id="menu">
+    <a href="#" onclick="openTab(event,'pult')">ПУЛЬТ</a>
+    <a href="#" onclick="openTab(event,'admin')">НАСТРОЙКИ</a>
+  </div>
+  <div id="pult" class="tabcontent">
+    <div id="top" class="panel">
+      <div id="top-left" class="container">
+        <table id="avariya-table">
+          <tr>
+            <td colspan="3">АВАРИЯ</td>
+            <td colspan="3"></td>
+          </tr>
+          <tr>
+            <td><img src="images/lamps/gray_lamp.png" /></td>
+            <td><img src="images/lamps/gray_lamp.png" /></td>
+            <td><img src="images/lamps/gray_lamp.png" /></td>
+            <td></td>
+            <td rowspan="3"><img id="antennaTumbler" src="images/tumblers/right_1.png" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>система контроля</td>
+            <td>станция</td>
+            <td>комутатор</td>
+            <td><img id="antennaLampEkv" src="images/lamps/gray_lamp.png" /></td>
+            <td><img id="antennaLampAnt" src="images/lamps/gray_lamp.png" /></td>
+          </tr>
+          <tr>
+            <td><img id="lampAvariyaAk" src="images/lamps/gray_lamp.png" /></td>
+            <td><img id="lampAvariyaVzs" src="images/lamps/gray_lamp.png" /></td>
+            <td>
+              <img src="images/lamps/gray_lamp.png" /></td>
+            <td>эквивал.</td>
+            <td>антен.</td>
+          </tr>
+          <tr>
+            <td>антен. колонка</td>
+            <td>взс</td>
+            <td>упор ум</td>
+            <td colspan="3"></td>
+          </tr>
+        </table>
+        <table id="kontrol-table">
+          <tr>
+            <td>деблокировка</td>
+            <td rowspan="2"><img src="images/perekluch/1_.png" /></td>
+            <td>тренажер включен</td>
+          </tr>
+          <tr>
+            <td><button></button></td>
+            <td><img src="images/lamps/gray_lamp.png" /></td>
+          </tr>
+          <tr>
+            <td><img src="images/perekluch/1_.png" /></td>
+            <td>проверка</td>
+            <td><img src="images/perekluch/1_.png" /></td>
+          </tr>
+          <tr>
+            <td colspan="3">ручной контроль</td>
+          </tr>
+          <tr>
+            <td>самоконтроль</td>
+            <td>автоконтроль</td>
+            <td>сброс индикации контроля</td>
+          </tr>
+          <tr>
+            <td><button></button></td>
+            <td><img id="avtokontrolTumbler" src="images/tumblers/off_1.png" /></td>
+            <td><button></button></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>откл.</td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <div id="top-center" class="container">
+        <div id="clock-shetchik">
+          <div id="clock-div">
+            <label id="myClock"></label>
+          </div>
+          <div id="shetchik-div">
+            <label>ВЕРМЯ НАРАБОТКИ</label>
+            <table id="narabotka-table">
+              <tr>
+                <td>станция</td>
+                <td>передатч.</td>
+              </tr>
+              <tr>
+                <td id="narabotka-st">00000</td>
+                <td id="narabotka-per">00000</td>
+              </tr>
             </table>
-            </div>
+          </div>
         </div>
-        <div id="bottom" class="panel">
-            <div id="top-buttons" class="container">
-                <table id="peredatchick-table">
-                    <tr>
-                        <td>ПЕРЕДАТЧИК</td>
-                        <td>КАНАЛЫ 1-35</td>
-                    </tr>
-                    <tr>
-                        <td><img id="peredatchikTumbler" src="images/tumblers/off_1.png"/></td>
-                        <td><img id="kanalyTumbler" src="images/tumblers/off_1.png"/></td>
-                    </tr>
-                    <tr>
-                        <td>ОТКЛ.</td>
-                        <td>1-58</td>
-                    </tr>
-                </table>
-                <table id="vcu-table">
-                    <tr>
-                        <td colspan="2">РАБОТА</td>
-                    </tr>
-                    <tr>
-                        <td><button id="butVcu"></button></td>
-                        <td><button id="butAvt"></button></td>
-                    </tr>
-                    <tr>
-                        <td>ВЦУ</td>
-                        <td>АВТОНОМ.</td>
-                    </tr>
-                </table>
-                <table id="peregovornayaSet-table">
-                    <tr>
-                        <td>ЭКСТРА- ПОЛЯЦИЯ</td>
-                        <td>ПЕРЕГОВОРНАЯ СЕТЬ</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><button id="butExstrapol"></button></td>
-                        <td><img id="peregovornayaSetTumbler" src="images/tumblers/off_1.png"/></td>
-                        <td><button></button></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>ОТКЛ.</td>
-                        <td>ВЫЗОВ</td>
-                    </tr>
-                </table>
+        <div>
+          <div id="emu-div">
+            <table id="table-emu">
+              <tr>
+                <td colspan="5">ВКЛЮЧЕНО</td>
+              </tr>
+              <tr>
+                <td><img id="lampNizkoe" src="images/lamps/gray_lamp.png" /></td>
+                <td><img id="lampVisokoe" src="images/lamps/gray_lamp.png" /></td>
+                <td><img id="lamp3kV" src="images/lamps/gray_lamp.png" /></td>
+                <td><img id="lampPeretatchik" src="images/lamps/gray_lamp.png" /></td>
+                <td><img id="lampRychnoe" src="images/lamps/gray_lamp.png" /></td>
+              </tr>
+              <tr>
+                <td>низкое</td>
+                <td>высокое</td>
+                <td>+3кВ</td>
+                <td>передатчик</td>
+                <td>ручное</td>
+              </tr>
+              <tr>
+                <td colspan="5">ЭМУ ВКЛЮЧЕНЫ</td>
+              </tr>
+              <tr>
+                <td colspan="2"><img src="images/lamps/gray_lamp.png" id="lamp-emu-az" /></td>
+                <td></td>
+                <td colspan="2"><img src="images/lamps/gray_lamp.png" id="lamp-emu-um" /></td>
+              </tr>
+              <tr>
+                <td colspan="2">азимут</td>
+                <td></td>
+                <td colspan="2">угол места</td>
+              </tr>
+              <tr>
+                <td><button id="emu-az-on"></button></td>
+                <td><button id="emu-az-off"></button></td>
+                <td></td>
+                <td><button id="emu-um-on"></button></td>
+                <td><button id="emu-um-off"></button></td>
+              </tr>
+              <tr>
+                <td>вкл.</td>
+                <td>откл.</td>
+                <td></td>
+                <td>вкл.</td>
+                <td>откл.</td>
+              </tr>
+            </table>
+          </div>
+          <div id="station-div">
+            <div>
+              <br/>
+              <label>станция</label>
+              <img id="img-station" src="images/tumblers/off_1.png" />
+              <label>откл.</label>
             </div>
-            <div id="image-content" class="container">
-                <div id="image-left" class="container">
-                    <br/>
-                    <img src="images/amermetr.png"/>
-                    <table id="sbros-table">
-                        <tr>
-                            <td colspan="2">СБРОС</td>
-                        </tr>
-                        <tr>
-                            <td><button id="butSbrosOb"></button></td>
-                            <td><button id="butSbrosInd"></button></td>
-                        </tr>
-                        <tr>
-                            <td>общий</td>
-                            <td>индикации</td>
-                        </tr>
-                    </table>
-                    <table id="viderzkaAC">
-                        <tr>
-                            <td colspan="5">ВЫДЕРЖКА АС</td>
-                        </tr>
-                        <tr>
-                            <td><button id="butVidergka5"></button></td>
-                            <td><button id="butVidergka10"></button></td>
-                            <td><button id="butVidergka20"></button></td>
-                            <td><button id="butVidergka30"></button></td>
-                            <td><button id="butVidergka0"></button></td>
-                        </tr>
-                        <tr>
-                            <td>5сек</td>
-                            <td>10сек</td>
-                            <td>20сек</td>
-                            <td>30сек</td>
-                            <td>откл</td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="azimut" class="container">
-                    <canvas id = "azCanva">Обновите браузер</canvas>
-                </div>
-                <div id="lamp-field">
-                </div>
-                <div id="ugolmesta" class="container">
-                    <canvas id = "umCanva">Обновите браузер</canvas>
-                    <label id="umLabel">0</label>
-                </div>
-                <div id="image-right" class="container">
-                    <br/>
-                    <img src="images/amermetr.png"/>
-                    <table id="diagramu-table">
-                        <tr>
-                            <td colspan="2">ДИАГРАМЫ</td>
-                        </tr>
-                        <tr>
-                            <td><button id="butUzkDiagram"></button></td>
-                            <td><button id="butShirDiagram"></button></td>
-                        </tr>
-                        <tr>
-                            <td>узкие</td>
-                            <td>широкие</td>
-                        </tr>
-                    </table>
-                    <table id="regum-table">
-                        <tr>
-                            <td colspan="3">РЕЖИМ РАБОТЫ</td>
-                        </tr>
-                        <tr>
-                            <td><button id="butObzor"></button></td>
-                            <td><button id="butAvtomat"></button></td>
-                            <td><button id="butPolyavtomat"></button></td>
-                        </tr>
-                        <tr>
-                            <td>ОБЗОР</td>
-                            <td>АВТОМ.</td>
-                            <td>ПОЛУ АВТОМ.</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div id="bottom-buttons" class="container">
-                <table id="vlevo-vpravo">
-                    <tr>
-                        <td colspan="2">влево</td>
-                        <td colspan="2">вправо</td>
-                    </tr>
-                    <tr>
-                        <td>медл.</td>
-                        <td></td>
-                        <td>медл.</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><button id="butVlevoMedleno"></button></td>
-                        <td><button id="butVlevoBistro"></button></td>
-                        <td><button id="butVpravoMedleno"></button></td>
-                        <td><button id="butVpravoBistro"></button></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">быстро</td>
-                        <td colspan="2">быстро</td>
-                    </tr>
-                </table>
-                <table id="shirina-sektora">
-                    <tr>
-                        <td colspan="7">ШИРИНА СЕКТОРА</td>
-                    </tr>
-                    <tr>
-                        <td><button id="but360">360</button></td>
-                        <td><button id="but120">120</button></td>
-                        <td><button id="but90">90</button></td>
-                        <td><button id="but60">60</button></td>
-                        <td><button id="but20">20х20</button></td>
-                        <td><button id="but12">12х12</button></td>
-                        <td><button id="but6">6х6</button></td>
-                    </tr>
-                </table>
-                <table id="vverh-vniz">
-                    <tr>
-                        <td colspan="2">вверх</td>
-                        <td colspan="2">вниз</td>
-                    </tr>
-                    <tr>
-                        <td>медл.</td>
-                        <td></td>
-                        <td>медл.</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><button id="butVverhMedleno"></button></td>
-                        <td><button id="butVverhBistro"></button></td>
-                        <td><button id="butVnizMedleno"></button></td>
-                        <td><button id="butVnizBistro"></button></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">быстро</td>
-                        <td colspan="2">быстро</td>
-                    </tr>
-                </table>
-            </div>
+          </div>
         </div>
+      </div>
+      <div id="top-right" class="container">
+        <br/>
+        <label>КОНТРОЛЬ ИСТОЧНИКОВ ПИТАНИЯ</label>
+        <div id="top-right-1">
+          <br/>
+          <img src="images/amermetr.png" style="margin:5px;" /><br/>
+          <img src="images/perekluch/1_.png" /><br/> контроль напряжения
         </div>
-    <script src = "source/config.js" type="text/javascript"></script>
-    <script src = "source/model.js" type="text/javascript"></script>
-    <script src = "source/view.js" type="text/javascript"></script>
-    <script src = "source/app.js" type="text/javascript"></script>
+        <div id="top-right-2">
+          <img src="images/perekluch/1_.png" /><br/>
+          <img src="images/tablica_blokov.bmp" />
+        </div>
+      </div>
+    </div>
+    <div id="center" class="panel">
+      <div id="transparants-1" class="container">
+        <label>КАНАЛЫ</label>
+        <br/>
+        <table id="indicators-table">
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+            <td>20</td>
+            <td>21</td>
+            <td>22</td>
+            <td>23</td>
+            <td>24</td>
+            <td>25</td>
+            <td>26</td>
+            <td>27</td>
+            <td>28</td>
+            <td>29</td>
+            <td>30</td>
+            <td>31</td>
+            <td>32</td>
+          </tr>
+          <tr>
+            <td><img id="1k" /></td>
+            <td><img id="2k" /></td>
+            <td><img id="3k" /></td>
+            <td><img id="4k" /></td>
+            <td><img id="5k" /></td>
+            <td><img id="6k" /></td>
+            <td><img id="7k" /></td>
+            <td><img id="8k" /></td>
+            <td><img id="9k" /></td>
+            <td><img id="10k" /></td>
+            <td><img id="11k" /></td>
+            <td><img id="12k" /></td>
+            <td><img id="13k" /></td>
+            <td><img id="14k" /></td>
+            <td><img id="15k" /></td>
+            <td><img id="16k" /></td>
+            <td><img id="17k" /></td>
+            <td><img id="18k" /></td>
+            <td><img id="19k" /></td>
+            <td><img id="20k" /></td>
+            <td><img id="21k" /></td>
+            <td><img id="22k" /></td>
+            <td><img id="23k" /></td>
+            <td><img id="24k" /></td>
+            <td><img id="25k" /></td>
+            <td><img id="26k" /></td>
+            <td><img id="27k" /></td>
+            <td><img id="28k" /></td>
+            <td><img id="29k" /></td>
+            <td><img id="30k" /></td>
+            <td><img id="31k" /></td>
+            <td><img id="32k" /></td>
+          </tr>
+          <tr>
+            <td>33</td>
+            <td>34</td>
+            <td>35</td>
+            <td>36</td>
+            <td>37</td>
+            <td>38</td>
+            <td>39</td>
+            <td>40</td>
+            <td>41</td>
+            <td>42</td>
+            <td>43</td>
+            <td>44</td>
+            <td>45</td>
+            <td>46</td>
+            <td>47</td>
+            <td>48</td>
+            <td>49</td>
+            <td>50</td>
+            <td>51</td>
+            <td>52</td>
+            <td>53</td>
+            <td>54</td>
+            <td>55</td>
+            <td>56</td>
+            <td>57</td>
+            <td>58</td>
+            <td>59</td>
+            <td>60</td>
+            <td>61</td>
+            <td>62</td>
+            <td>63</td>
+            <td>64</td>
+          </tr>
+          <tr>
+            <td><img id="33k" /></td>
+            <td><img id="34k" /></td>
+            <td><img id="35k" /></td>
+            <td><img id="36k" /></td>
+            <td><img id="37k" /></td>
+            <td><img id="38k" /></td>
+            <td><img id="39k" /></td>
+            <td><img id="40k" /></td>
+            <td><img id="41k" /></td>
+            <td><img id="42k" /></td>
+            <td><img id="43k" /></td>
+            <td><img id="44k" /></td>
+            <td><img id="45k" /></td>
+            <td><img id="46k" /></td>
+            <td><img id="47k" /></td>
+            <td><img id="48k" /></td>
+            <td><img id="49k" /></td>
+            <td><img id="50k" /></td>
+            <td><img id="51k" /></td>
+            <td><img id="52k" /></td>
+            <td><img id="53k" /></td>
+            <td><img id="54k" /></td>
+            <td><img id="55k" /></td>
+            <td><img id="56k" /></td>
+            <td><img id="57k" /></td>
+            <td><img id="58k" /></td>
+            <td><img id="59k" /></td>
+            <td><img id="60k" /></td>
+            <td><img id="61k" /></td>
+            <td><img id="62k" /></td>
+            <td><img id="63k" /></td>
+            <td><img id="64k" /></td>
+          </tr>
+        </table>
+        <table id="vcu-transparants">
+          <tr>
+            <td colspan="12" style="border-style:none;background-color:inherit">ВЦУ</td>
+          </tr>
+          <tr>
+            <td id="trVcu" class="orangePassive">РАБОТА ПО ВЦУ</td>
+            <td id="trAvtonomno" class="orangePassive">РАБОТА АВТОНОМ.</td>
+            <td id="trVisokVkl" class="orangePassive">ВЫСОКОЕ ВКЛЮЧИТЬ</td>
+            <td id="trNizkVkl" class="orangePassive">НИЗКОЕ ВКЛЮЧИТЬ</td>
+            <td id="trOdinochnaya" class="orangePassive">ОДИНОЧНАЯ</td>
+            <td id="trGrupa" class="orangePassive">ГРУППА</td>
+            <td id="trZona1" class="orangePassive">ЗОНА 1</td>
+            <td id="trZona2" class="orangePassive">ЗОНА 2</td>
+            <td id="trZona3" class="orangePassive">ЗОНА 3</td>
+            <td id="trDopoiskVkl" class="orangePassive">ДОПОИСК ВКЛЮЧИТЬ</td>
+            <td id="trNovoeVcu" class="orangePassive">НОВОЕ ВЦУ</td>
+            <td id="trBlank" class="orangePassive"> </td>
+          </tr>
+        </table>
+      </div>
+      <div id="vcu-div" class="container">
+        <div>
+          <img src="" />
+          <label>АЗИМУТ</label>
+        </div>
+        <div>
+          <br/>
+          <label>ВЦУ</label><br/>
+          <label>точно</label><br/>
+          <img id="vcuTumbler" src="images/tumblers/on_1.png" /><br/>
+          <label>грубо</label>
+        </div>
+        <div>
+          <table id="sbros-indicacii-table">
+            <tr>
+              <td colspan="3">СБРОС ИНДИКАЦИИ ВЦУ</td>
+            </tr>
+            <tr>
+              <td colspan="3"><button id="butSbrosVcu"></button></td>
+            </tr>
+            <tr>
+              <td colspan="3">ЗАПРЕТ КАНАЛОВ</td>
+            </tr>
+            <tr>
+              <td><img src="images/lamps/gray_lamp.png" /></td>
+              <td><button></button></td>
+              <td><img src="images/lamps/gray_lamp.png" /></td>
+            </tr>
+            <tr>
+              <td>ручной</td>
+              <td>сброс</td>
+              <td>автомат</td>
+            </tr>
+          </table>
+        </div>
+        <div>
+          <br/>
+          <label>допоиск</label><br/>
+          <img id="dopoiskTumbler" src="images/tumblers/off_1.png" /><br/>
+          <label>откл.</label>
+        </div>
+        <div>
+          <img src="" />
+          <label>УГОЛ МЕСТА</label>
+        </div>
+      </div>
+      <div id="transparants-2" class="container">
+        <table id="regumraboty-transparants">
+          <tr>
+            <td colspan="12" style="border-style:none; background-color:inherit">РЕЖИМ РАБОТЫ</td>
+          </tr>
+          <tr>
+            <td id="trVcu2" class="greenPassive">РАБОТА ПО ВЦУ</td>
+            <td id="trAvtonomno2" class="greenPassive">РАБОТА АВТОНОМ.</td>
+            <td id="trPoluAvtomat" class="greenPassive">ПОЛУАВ- ТОМАТ</td>
+            <td id="trObzor" class="greenPassive">ОБЗОР</td>
+            <td id="trPoisk" class="greenPassive">ПОИСК</td>
+            <td id="trSoprovogdenie" class="greenPassive">СОПРОВОЖ- ДЕНИЕ</td>
+            <td id="trOdinochnaya2" class="greenPassive">ОДИНОЧНАЯ</td>
+            <td id="trGrupa2" class="greenPassive">ГРУППА</td>
+            <td id="trMoshnost" class="orangePassive">МОЩНОСТЬ</td>
+            <td id="trEkstrapolacia" class="greenPassive">ЭКСТРА- ПОЛЯЦИЯ</td>
+            <td id="trDiagramuUzkie" class="orangePassive">ДИАГРАМЫ УЗКИЕ</td>
+            <td id="trDiagramuShirokie" class="orangePassive">ДИАГРАМЫ ШИРОКИЕ</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="bottom" class="panel">
+      <div id="top-buttons" class="container">
+        <table id="peredatchick-table">
+          <tr>
+            <td>ПЕРЕДАТЧИК</td>
+            <td>КАНАЛЫ 1-35</td>
+          </tr>
+          <tr>
+            <td><img id="peredatchikTumbler" src="images/tumblers/off_1.png" /></td>
+            <td><img id="kanalyTumbler" src="images/tumblers/off_1.png" /></td>
+          </tr>
+          <tr>
+            <td>ОТКЛ.</td>
+            <td>1-58</td>
+          </tr>
+        </table>
+        <table id="vcu-table">
+          <tr>
+            <td colspan="2">РАБОТА</td>
+          </tr>
+          <tr>
+            <td><button id="butVcu"></button></td>
+            <td><button id="butAvt"></button></td>
+          </tr>
+          <tr>
+            <td>ВЦУ</td>
+            <td>АВТОНОМ.</td>
+          </tr>
+        </table>
+        <table id="peregovornayaSet-table">
+          <tr>
+            <td>ЭКСТРА- ПОЛЯЦИЯ</td>
+            <td>ПЕРЕГОВОРНАЯ СЕТЬ</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><button id="butExstrapol"></button></td>
+            <td><img id="peregovornayaSetTumbler" src="images/tumblers/off_1.png" /></td>
+            <td><button></button></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>ОТКЛ.</td>
+            <td>ВЫЗОВ</td>
+          </tr>
+        </table>
+      </div>
+      <div id="image-content" class="container">
+        <div id="image-left" class="container">
+          <br/>
+          <img src="images/amermetr.png" />
+          <table id="sbros-table">
+            <tr>
+              <td colspan="2">СБРОС</td>
+            </tr>
+            <tr>
+              <td><button id="butSbrosOb"></button></td>
+              <td><button id="butSbrosInd"></button></td>
+            </tr>
+            <tr>
+              <td>общий</td>
+              <td>индикации</td>
+            </tr>
+          </table>
+          <table id="viderzkaAC">
+            <tr>
+              <td colspan="5">ВЫДЕРЖКА АС</td>
+            </tr>
+            <tr>
+              <td><button id="butVidergka5"></button></td>
+              <td><button id="butVidergka10"></button></td>
+              <td><button id="butVidergka20"></button></td>
+              <td><button id="butVidergka30"></button></td>
+              <td><button id="butVidergka0"></button></td>
+            </tr>
+            <tr>
+              <td>5сек</td>
+              <td>10сек</td>
+              <td>20сек</td>
+              <td>30сек</td>
+              <td>откл</td>
+            </tr>
+          </table>
+        </div>
+        <div id="azimut" class="container">
+          <canvas id="azCanva">Обновите браузер</canvas>
+        </div>
+        <div id="lamp-field">
+        </div>
+        <div id="ugolmesta" class="container">
+          <canvas id="umCanva">Обновите браузер</canvas>
+          <label id="umLabel">0</label>
+        </div>
+        <div id="image-right" class="container">
+          <br/>
+          <img src="images/amermetr.png" />
+          <table id="diagramu-table">
+            <tr>
+              <td colspan="2">ДИАГРАМЫ</td>
+            </tr>
+            <tr>
+              <td><button id="butUzkDiagram"></button></td>
+              <td><button id="butShirDiagram"></button></td>
+            </tr>
+            <tr>
+              <td>узкие</td>
+              <td>широкие</td>
+            </tr>
+          </table>
+          <table id="regum-table">
+            <tr>
+              <td colspan="3">РЕЖИМ РАБОТЫ</td>
+            </tr>
+            <tr>
+              <td><button id="butObzor"></button></td>
+              <td><button id="butAvtomat"></button></td>
+              <td><button id="butPolyavtomat"></button></td>
+            </tr>
+            <tr>
+              <td>ОБЗОР</td>
+              <td>АВТОМ.</td>
+              <td>ПОЛУ АВТОМ.</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="bottom-buttons" class="container">
+        <table id="vlevo-vpravo">
+          <tr>
+            <td colspan="2">влево</td>
+            <td colspan="2">вправо</td>
+          </tr>
+          <tr>
+            <td>медл.</td>
+            <td></td>
+            <td>медл.</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><button id="butVlevoMedleno"></button></td>
+            <td><button id="butVlevoBistro"></button></td>
+            <td><button id="butVpravoMedleno"></button></td>
+            <td><button id="butVpravoBistro"></button></td>
+          </tr>
+          <tr>
+            <td colspan="2">быстро</td>
+            <td colspan="2">быстро</td>
+          </tr>
+        </table>
+        <table id="shirina-sektora">
+          <tr>
+            <td colspan="7">ШИРИНА СЕКТОРА</td>
+          </tr>
+          <tr>
+            <td><button id="but360">360</button></td>
+            <td><button id="but120">120</button></td>
+            <td><button id="but90">90</button></td>
+            <td><button id="but60">60</button></td>
+            <td><button id="but20">20х20</button></td>
+            <td><button id="but12">12х12</button></td>
+            <td><button id="but6">6х6</button></td>
+          </tr>
+        </table>
+        <table id="vverh-vniz">
+          <tr>
+            <td colspan="2">вверх</td>
+            <td colspan="2">вниз</td>
+          </tr>
+          <tr>
+            <td>медл.</td>
+            <td></td>
+            <td>медл.</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><button id="butVverhMedleno"></button></td>
+            <td><button id="butVverhBistro"></button></td>
+            <td><button id="butVnizMedleno"></button></td>
+            <td><button id="butVnizBistro"></button></td>
+          </tr>
+          <tr>
+            <td colspan="2">быстро</td>
+            <td colspan="2">быстро</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div id="admin" class="tabcontent">
+    <h3>Admin</h3>
+    <p>
+      Here is the admin page!
+    </p>
+  </div>
+  <script src="source/tab.js" type="text/javascript"></script>
+  <script src="source/config.js" type="text/javascript"></script>
+  <script src="source/model.js" type="text/javascript"></script>
+  <script src="source/view.js" type="text/javascript"></script>
+  <script src="source/app.js" type="text/javascript"></script>
 </body>
+
 </html>

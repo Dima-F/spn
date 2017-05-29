@@ -76,11 +76,23 @@ td {
     width:10px;
     padding:0px;
 }
+#menu a {
+  width:60px;
+}
+#menu a:link,#menu a:visited {
+    background-color: gray;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
 
-/*identifiers*/
+#menu a:hover,#menu a:active {
+    background-color: lightgray;
+}
 
-
-#pult {
+#pult, #admin {
     border:1px solid ;
     width:800px;
     height: auto;
@@ -197,13 +209,13 @@ td {
     height:212px;
     float:left;
     align-content: center;
-    background:url("images/back_azimut.png") no-repeat center center;
+    background:url("../images/back_azimut.png") no-repeat center center;
 }
 #ugolmesta {
     width:212px;
     height:212px;
     float:left;
-    background:url("images/back_um.png") no-repeat center center;
+    background:url("../images/back_um.png") no-repeat center center;
 }
 #image-right {
     width:120px;
@@ -310,4 +322,3 @@ td {
     border-radius:10px;
     padding:3px;
 }
-

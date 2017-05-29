@@ -1,11 +1,11 @@
 function run() {
     var reo = new REO();
     var numbers;
-    do {
+    /*do {
       numbers = prompt("Вве­ди­те ­количество целей от 1 до 30!");
-    } while (isNaN(numbers) || numbers < 1 || numbers > 30);
+    } while (isNaN(numbers) || numbers < 1 || numbers > 30);*/
     //var p = showModalDialog("../main.html", ["Enter something...","x","y","z"],"dialogwidth:400;dialogheight:300;resizable:true");
-    reo.generateTargets(numbers);
+    reo.generateTargets(5);
     setInterval(function () {
         reo.printTargets();
     },config.consoleUpdating*1000);
