@@ -175,7 +175,7 @@ function View(station) {
 
     this.lightSector = function (target) {
         if (target instanceof Target) {
-            var id = target.type+ '_' + Math.floor(target.angle.a / 22.5);
+            var id = target.getType()+ '_' + Math.floor(target.getAngle().a / 22.5);
             document.getElementById(id).setAttribute('src', './images/lamps/yellow_lamp.png');
         }
         else {
@@ -185,7 +185,7 @@ function View(station) {
 
     this.lightOffSector = function (target) {
         if (target instanceof Target) {
-            var id = target.type+ '_' + Math.floor(target.angle.a / 22.5);
+            var id = target.getType()+ '_' + Math.floor(target.getAngle().a / 22.5);
             document.getElementById(id).setAttribute('src', './images/lamps/gray_lamp.png');
         }
         else {
@@ -195,7 +195,7 @@ function View(station) {
 
     this.lightChannel = function (target) {
         if (target instanceof Target) {
-            var elem = document.getElementById(target.channel + "k");
+            var elem = document.getElementById(target.getChannel() + "k");
             elem.setAttribute("src", "images/lamps/yellow_lamp.png");
         }
         else {
@@ -205,7 +205,7 @@ function View(station) {
 
     this.lightOffChannel = function (target) {
         if (target instanceof Target) {
-            var elem = document.getElementById(target.channel + "k");
+            var elem = document.getElementById(target.getChannel() + "k");
             elem.setAttribute("src", "images/lamps/gray_lamp.png");
         }
         else {

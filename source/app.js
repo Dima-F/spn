@@ -1,6 +1,11 @@
 function run() {
     var reo = new REO();
-    reo.generateTargets(15);
+    var numbers;
+    do {
+      numbers = prompt("Вве­ди­те ­количество целей от 1 до 30!");
+    } while (isNaN(numbers) || numbers < 1 || numbers > 30);
+    //var p = showModalDialog("../main.html", ["Enter something...","x","y","z"],"dialogwidth:400;dialogheight:300;resizable:true");
+    reo.generateTargets(numbers);
     setInterval(function () {
         reo.printTargets();
     },config.consoleUpdating*1000);
@@ -10,7 +15,7 @@ function run() {
     view.displayKanalyLampsOff();
     view.generateSectorLamps();
     station.subscribe(view);
-    //event handlers---------------------------
+    //event handlers----------------------
     stationTumbler.onclick = function () {
         reo.printTargets();
         view.toggleStationTumbler();
