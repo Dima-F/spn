@@ -425,6 +425,14 @@ function View(station) {
                 lampAvariyaVzs.setAttribute("src", "images/lamps/gray_lamp.png");
             }
         };
+        var drawAvariyaAk = function () {
+            if(station.avariyaAk){
+                lampAvariyaAk.setAttribute("src", "images/lamps/red_lamp.png");
+            }
+            else {
+                lampAvariyaAk.setAttribute("src", "images/lamps/gray_lamp.png");
+            }
+        };
         var drawExtrapolation = function () {
             if(station.exstrapolating){
                 trEkstrapolacia.setAttribute("class", "greenActive");
@@ -558,7 +566,7 @@ function View(station) {
                     butPolyavtomat.className='shadow';
                     butAvtomat.className='';
                     butObzor.className='';
-                    break
+                    break;
                 case 'ob':
                     butPolyavtomat.className='';
                     butAvtomat.className='';
@@ -587,7 +595,7 @@ function View(station) {
                     butVidergka10.className='';
                     butVidergka20.className='';
                     butVidergka30.className='';
-                    break
+                    break;
                 case 5:
                     butVidergka0.className='';
                     butVidergka5.className='shadow';
@@ -633,6 +641,7 @@ function View(station) {
             drawVisokoe();
             drawPeredatchick();
             drawAvariyaVzs();
+            drawAvariyaAk();
             drawPomeha();
             drawExtrapolation();
             drawAction();

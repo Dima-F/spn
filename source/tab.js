@@ -26,6 +26,7 @@ function openTab(evt, tabName) {
 }
 //at the beggining tab admin is not visible
 document.getElementById('admin').style.display = "none";
+document.getElementById('reo').style.display = "none";
 //for settings tab functionality
 function loadSettings(){
   var form = document.forms.formSettings;

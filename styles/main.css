@@ -108,6 +108,15 @@ td {
     padding:20px;
     font-size: medium;
 }
+#reo {
+    border:1px solid ;
+    width:700px;
+    height: 700px;
+    background-color:whitesmoke;
+    margin: 0 auto;
+    padding:20px;
+    font-size: small;
+}
 #admin input {
   margin:5px;
 }
@@ -232,6 +241,13 @@ td {
     height:212px;
     float:left;
     background:url("../images/back_um.png") no-repeat center center;
+}
+#reoImg {
+  width:605px;
+  height:605px;
+  align-content: center;
+  background:url("../images/reo.png") no-repeat center center;
+  margin: 30px 50px;
 }
 #image-right {
     width:120px;

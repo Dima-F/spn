@@ -11,6 +11,7 @@
             width: 1920px; height: 1080px; bottom: auto; right: auto;">
   <div id="menu">
     <a href="#" onclick="openTab(event,'pult')">ПУЛЬТ</a>
+    <a href="#" onclick="openTab(event,'reo')">РЕО</a>
     <a href="#" onclick="openTab(event,'admin')">НАСТРОЙКИ</a>
   </div>
   <div id="pult" class="tabcontent">
@@ -99,8 +100,8 @@
                 <td>передатч.</td>
               </tr>
               <tr>
-                <td id="narabotka-st">00000</td>
-                <td id="narabotka-per">00000</td>
+                <td id="narabotka-st">05732</td>
+                <td id="narabotka-per">01195</td>
               </tr>
             </table>
           </div>
@@ -596,6 +597,12 @@
       </div>
     </div>
   </div>
+  <div id="reo" class="tabcontent">
+    <h2>Радиоелектронная обстановка</h2>
+    <div id='reoImg' class=''>
+      <canvas id="reoCanva">Обновите браузер</canvas>
+    </div>
+  </div>
   <div id="admin" class="tabcontent">
       <form action="#" name='formSettings'>
           <fieldset>
@@ -619,10 +626,10 @@
       <form action="#" name='addTargetForm'>
           <fieldset>
               <legend>Добавление новой цели:</legend>
-              Азимут:<br>
-              <input type="text" name="targetAzimut"><br>
+              Азимут (град.):<br>
+              <input type="text" name="targetAzimut" value="180"><br>
               Канал:<br>
-              <input type="text" name="targetChannel"><br>
+              <input type="text" name="targetChannel" value="25"><br>
               Зона:<br>
               <select name='targetZone'>
                 <option value='1'>Дальняя</option>
