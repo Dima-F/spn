@@ -585,14 +585,37 @@ function Target() {
     this.getChannel = function(){
         return _channel;
     };
+    this.setChannel = function(channel){
+      _channel = channel;
+    };
     this.getAngle = function () {
         return _angle;
+    };
+    this.setAzimut = function(azimut){
+      _angle.a=azimut;
+      if(_zone){
+        switch(_zone){
+            case 1:
+                _angle.u=Math.floor(Math.random() * (config.relativeMaxUmZone1+1));
+            break;
+            case 2:
+                _angle.u=Math.floor(Math.random() * (config.relativeMaxUmZone2+1));
+            break;
+            default:throw new Error('Wrong zone in target!');
+        }
+      }
     };
     this.getType = function(){
       return _type;
     };
+    this.setType = function(type){
+      _type = type;
+    };
     this.getZone = function(){
       return _zone;
+    };
+    this.setZone = function(zone){
+      _zone=zone;
     };
     this.apear = function () {
         var self=this;
@@ -623,47 +646,58 @@ function Target() {
       }();
     };
     this.initialize();
-    this.apear();
 }
 
 function REO() {
-    this.targets = [];
-    this.generateTargets = function (amount) {
+    var _targets = [];
+    this.generateTargets = function () {
+        var amount = config.numTargets;
         if (isNaN(amount))
             return;
-        this.targets = [];
+        _targets = [];
         for (var i = 0; i < amount; i++) {
-            this.targets[i] = new Target();
-            this.targets[i].startTime=i*config.frequencyTarget;
+            _targets[i] = new Target();
+            _targets[i].startTime=i*config.frequencyTarget;
+            _targets[i].apear();
         }
     };
+    this.addTarget = function(azimut,channel,zone,type){
+      var target = new Target();
+      target.setAzimut(azimut);
+      target.setChannel(channel);
+      target.setType(type);
+      _targets.push(target);
+      target.apear();
+    };
+    this.clearTargets = function(){
+      _targets=[];
+    };
     this.getOnlineTargets = function () {
-        return this.targets.filter(function (t) {
+        return _targets.filter(function (t) {
             return t.online;
         });
     };
     this.getSuppressedTargets = function () {
-        return this.targets.filter(function (t) {
+        return _targets.filter(function (t) {
             return t.supressed;
         });
     };
     this.printTargets = function () {
-        var self = this;
-        if (self.targets.length === 0) {
+        if (_targets.length === 0) {
             console.log("There are no targets in reo");
         }
         else {
-            for (var i = 0; i < self.targets.length; i++) {
-                var info = 'Target ' + i + '>channel:' + self.targets[i].getChannel() +
-                    ' azimut:' + self.targets[i].getAngle().a +
-                    ' um:' + self.targets[i].getAngle().u +
-                    ' type:' + self.targets[i].getType() +
-                    ' zone:' + self.targets[i].getZone() +
-                    ' start time:' + self.targets[i].startTime+
-                    ' live during:' + self.targets[i].liveTime+
-                    ' was suppressed:' + self.targets[i].supressed+
-                    ' online: '+self.targets[i].online+
-                    ' direction: '+self.targets[i].direction;
+            for (var i = 0; i < _targets.length; i++) {
+                var info = 'Target ' + i + '>channel:' + _targets[i].getChannel() +
+                    ' azimut:' + _targets[i].getAngle().a +
+                    ' um:' + _targets[i].getAngle().u +
+                    ' type:' + _targets[i].getType() +
+                    ' zone:' + _targets[i].getZone() +
+                    ' start time:' + _targets[i].startTime+
+                    ' live during:' + _targets[i].liveTime+
+                    ' was suppressed:' + _targets[i].supressed+
+                    ' online: '+_targets[i].online+
+                    ' direction: '+_targets[i].direction;
                 console.log(info);
             }
             console.log('/n');

@@ -6,13 +6,15 @@ var config = {
     fastUm:150,
     obzorAz:50,
     obzorUm:65,
-
+    password:'123ewq',
     //время задержки загорания ламп в с
     delayAvariya:4,
     delayVisokoe:15,
     //растояния до цели, в км
     minDistance:50,
     maxDistance:250,
+    //количество целей в РЕО
+    numTargets:10,
     //время жизни цели в c.
     liveTarget:300,
     //частота появления новой цели в рео

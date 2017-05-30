@@ -597,10 +597,45 @@
     </div>
   </div>
   <div id="admin" class="tabcontent">
-    <h3>Admin</h3>
-    <p>
-      Here is the admin page!
-    </p>
+      <form action="#" name='formSettings'>
+          <fieldset>
+              <legend>Параметры появления цели:</legend>
+              Количество целей:<br>
+              <input type="text" name="numTargets"><br>
+              Время жизни (с):<br>
+              <input type="text" name="liveTarget"><br>
+              Частота появления (с):<br>
+              <input type="text" name="frequencyTarget"><br><br>
+          </fieldset>
+          <fieldset>
+              <legend>Параметры включения:</legend>
+              Задержка загорания лампы 'Авария АК' (с):<br>
+              <input type="text" name="delayAvariya"><br>
+              Задержка загорания лампы 'Высокое' (с):<br>
+              <input type="text" name="delayVisokoe"><br><br>
+          </fieldset>
+          <input type="submit" id='saveButton' value="Сохранить">
+      </form>
+      <form action="#" name='addTargetForm'>
+          <fieldset>
+              <legend>Добавление новой цели:</legend>
+              Азимут:<br>
+              <input type="text" name="targetAzimut"><br>
+              Канал:<br>
+              <input type="text" name="targetChannel"><br>
+              Зона:<br>
+              <select name='targetZone'>
+                <option value='1'>Дальняя</option>
+                <option value='2'>Ближняя</option>
+              </select><br />
+              Тип:<br>
+              <select name='targetType'>
+                <option value='1'>РЛС наведения оружия</option>
+                <option value='2'>РЛС бокового обзора</option>
+              </select><br />
+          </fieldset>
+          <input type="submit" id='addButton' value="Добавить">
+      </form>
   </div>
   <script src="source/tab.js" type="text/javascript"></script>
   <script src="source/config.js" type="text/javascript"></script>

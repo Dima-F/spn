@@ -1,11 +1,6 @@
 function run() {
     var reo = new REO();
-    var numbers;
-    /*do {
-      numbers = prompt("Вве­ди­те ­количество целей от 1 до 30!");
-    } while (isNaN(numbers) || numbers < 1 || numbers > 30);*/
-    //var p = showModalDialog("../main.html", ["Enter something...","x","y","z"],"dialogwidth:400;dialogheight:300;resizable:true");
-    reo.generateTargets(5);
+    reo.generateTargets();
     setInterval(function () {
         reo.printTargets();
     },config.consoleUpdating*1000);
@@ -15,6 +10,13 @@ function run() {
     view.displayKanalyLampsOff();
     view.generateSectorLamps();
     station.subscribe(view);
+
+
+
+
+
+
+
     //event handlers----------------------
     stationTumbler.onclick = function () {
         reo.printTargets();
@@ -123,7 +125,6 @@ function run() {
             view.displaySectorLampsOff();
         }
     };
-
     butVlevoMedleno.onmousedown = function () {
         butVlevoMedleno.onmouseout = function () {
             station.stopMove();
@@ -133,7 +134,6 @@ function run() {
         };
         station.vlevo(config.slowAz);
     };
-
     butVpravoMedleno.onmousedown = function () {
         butVpravoMedleno.onmouseup = function () {
             station.stopMove();
@@ -143,7 +143,6 @@ function run() {
         };
         station.vpravo(config.slowAz);
     };
-
     butVlevoBistro.onmousedown = function () {
         butVlevoBistro.onmouseup = function () {
             station.stopMove();
@@ -153,7 +152,6 @@ function run() {
         };
         station.vlevo(config.fastAz);
     };
-
     butVpravoBistro.onmousedown = function () {
         butVpravoBistro.onmouseup = function () {
             station.stopMove();
@@ -163,7 +161,6 @@ function run() {
         };
         station.vpravo(config.fastAz);
     };
-
     butVverhMedleno.onmousedown = function () {
         butVverhMedleno.onmouseup = function () {
             station.stopMove();
@@ -173,7 +170,6 @@ function run() {
         };
         station.vverh(config.slowUm);
     };
-
     butVverhBistro.onmousedown = function () {
         butVverhBistro.onmouseup = function () {
             station.stopMove();
@@ -183,7 +179,6 @@ function run() {
         };
         station.vverh(config.fastUm);
     };
-
     butVnizMedleno.onmousedown = function () {
         butVnizMedleno.onmouseup = function () {
             station.stopMove();
@@ -193,7 +188,6 @@ function run() {
         };
         station.vniz(config.slowUm);
     };
-
     butVnizBistro.onmousedown = function () {
         butVnizBistro.onmouseup = function () {
             station.stopMove();
@@ -203,71 +197,71 @@ function run() {
         };
         station.vniz(config.fastUm);
     };
-
     but360.onclick = function () {
         station.setSector(360);
         view.refreshStatic(station);
     };
-
     but120.onclick = function () {
         station.setSector(120);
         view.refreshStatic(station);
     };
-
     but90.onclick = function () {
         station.setSector(90);
         view.refreshStatic(station);
     };
-
     but60.onclick = function () {
         station.setSector(60);
         view.refreshStatic(station);
     };
-
     but20.onclick = function () {
         station.setSector(20);
         view.refreshStatic(station);
     };
-
     but12.onclick = function () {
         station.setSector(12);
         view.refreshStatic(station);
     };
-
     but6.onclick = function () {
         station.setSector(6);
         view.refreshStatic(station);
     };
-
     butVidergka0.onclick = function () {
         station.setVidergka(0);
         view.refreshStatic(station);
     };
-
     butVidergka5.onclick = function () {
         station.setVidergka(5);
         view.refreshStatic(station);
     };
-
     butVidergka10.onclick = function () {
         station.setVidergka(10);
         view.refreshStatic(station);
     };
-
     butVidergka20.onclick = function () {
         station.setVidergka(20);
         view.refreshStatic(station);
     };
-
     butVidergka30.onclick = function () {
         station.setVidergka(30);
         view.refreshStatic(station);
     };
-
     butExstrapol.onclick = function () {
         if(station.started){
             station.setExstrapolation();
         }
+    };
+
+    //settings tab functionality
+    document.getElementById('saveButton').onclick = function(e){
+      e.preventDefault();
+      saveSettings();
+      reo.generateTargets();
+      openTab(event,'pult');
+    };
+    document.getElementById('addButton').onclick = function(e){
+      e.preventDefault();
+      addTarget(reo);
+      openTab(event,'pult');
     };
 }
 window.onload=run;
