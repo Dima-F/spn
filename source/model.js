@@ -564,12 +564,33 @@ function Angle(a, u) {
     this.u = u;
 }
 
-function Target() {
+function Target(azimut,channel,zone,type) {
     //private members
-    var _angle;
-    var _channel;
-    var _type;
-    var _zone;
+    var _type = type;
+    var _zone = zone;
+    var _angle = new Angle(azimut,this.getUgolMesta());
+    var _channel = channel;
+    var _d = initDistance;
+    this.getUgolMesta = function(){
+      var u=null;
+      switch(_zone){
+          case 1:
+              u=Math.floor(Math.random() * (config.relativeMaxUmZone1+1));
+          break;
+          case 2:
+              u=Math.floor(Math.random() * (config.relativeMaxUmZone2+1));
+          break;
+          default:throw new Error('Wrong zone in target!');
+      }
+      return u;
+    };
+    this.initDistance = function(){
+      _d=(_zone==2)?
+        getRandomArbitrary(50,140):
+        getRandomArbitrary(160,290);
+    };
+    this.initDistance();
+
     //public members
     this.online = false;
     this.liveTime = config.liveTarget;
@@ -585,37 +606,17 @@ function Target() {
     this.getChannel = function(){
         return _channel;
     };
-    this.setChannel = function(channel){
-      _channel = channel;
-    };
     this.getAngle = function () {
         return _angle;
-    };
-    this.setAzimut = function(azimut){
-      _angle.a=azimut;
-      if(_zone){
-        switch(_zone){
-            case 1:
-                _angle.u=Math.floor(Math.random() * (config.relativeMaxUmZone1+1));
-            break;
-            case 2:
-                _angle.u=Math.floor(Math.random() * (config.relativeMaxUmZone2+1));
-            break;
-            default:throw new Error('Wrong zone in target!');
-        }
-      }
     };
     this.getType = function(){
       return _type;
     };
-    this.setType = function(type){
-      _type = type;
-    };
     this.getZone = function(){
       return _zone;
     };
-    this.setZone = function(zone){
-      _zone=zone;
+    this.getDistance = function(){
+      return _d;
     };
     this.apear = function () {
         var self=this;
@@ -626,26 +627,6 @@ function Target() {
             },self.liveTime*1000);
         },self.startTime*1000);
     };
-    this.initialize=function(){
-      _channel = Math.floor(Math.random() * 64)+1;
-      _type = Math.random() > 0.5 ? 1 : 2;
-      _zone = Math.random() > 0.6 ? 1 : 2;
-      _angle = function () {
-          var a = Math.floor(Math.random() * 360);
-          var u=null;
-          switch(_zone){
-              case 1:
-                  u=Math.floor(Math.random() * (config.relativeMaxUmZone1+1));
-              break;
-              case 2:
-                  u=Math.floor(Math.random() * (config.relativeMaxUmZone2+1));
-              break;
-              default:throw new Error('Wrong zone in target!');
-          }
-          return new Angle(a, u);
-      }();
-    };
-    this.initialize();
 }
 
 function REO() {
@@ -656,16 +637,13 @@ function REO() {
             return;
         _targets = [];
         for (var i = 0; i < amount; i++) {
-            _targets[i] = new Target();
+            _targets[i] = new Target(getRandomArbitrary(0,359),getRandomArbitrary(1,64),getRandomArbitrary(1,2),getRandomArbitrary(1,2));
             _targets[i].startTime=i*config.frequencyTarget;
             _targets[i].apear();
         }
     };
     this.addTarget = function(azimut,channel,zone,type){
-      var target = new Target();
-      target.setAzimut(azimut);
-      target.setChannel(channel);
-      target.setType(type);
+      var target = new Target(azimut,channel,zone,type);
       _targets.push(target);
       target.apear();
     };

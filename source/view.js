@@ -1,6 +1,28 @@
 /**
  * Created by Dima on 29.08.2016.
  */
+ // clock
+ (function() {
+     var clock = document.getElementById('myClock');
+     // But there is a little problem
+     // we need to pad 0-9 with an extra
+     // 0 on the left for hours, seconds, minutes
+     var pad = function(x) {
+         return x < 10 ? '0'+x : x;
+     };
+     var ticktock;
+     ticktock = function () {
+         var d = new Date();
+         var h = pad(d.getHours());
+         var m = pad(d.getMinutes());
+         var s = pad(d.getSeconds());
+         clock.innerHTML = [h, m, s].join(':');
+     };
+     ticktock();
+     // Calling ticktock() every 1 second
+     setInterval(ticktock, 1000);
+ }());
+
 //tumblers
 var stationTumbler = document.getElementById("img-station");
 var antennaTumbler = document.getElementById("antennaTumbler");
@@ -259,6 +281,11 @@ function View(station) {
         if (this.t_station) {
             stationTumbler.setAttribute("src", "images/tumblers/on_1.png");
             //this.randomLight();
+            if(this.t_antenna){
+              station.antenna=true;
+            } else {
+              station.antenna=false;
+            }
         }
         else {
             stationTumbler.setAttribute("src", "images/tumblers/off_1.png");
@@ -666,25 +693,41 @@ function View(station) {
         document.getElementById(id).className='shadow';
 
     };
+    this.drawReo = function(angle){
+      var element = document.getElementById("reoCanva");
+      element.width=605;
+      element.height=605;
+      var context = element.getContext('2d');
+      var r=Math.floor(element.width/2);
+      context.beginPath();
+      context.strokeStyle = "red";
+      context.translate(r,r);
+      context.save();
+      if(station._3kV){
+        context.shadowBlur=40;
+        context.shadowColor="red";
+        context.lineWidth=3;
+      }
+      context.moveTo(0,0);
+      context.lineTo(Math.floor(r*Math.cos((angle-90)*Math.PI/180)),Math.floor(r*Math.sin((angle-90)*Math.PI/180)));
+      context.stroke();
+      context.restore();
+      var targets = station.reo.getOnlineTargets();
+      for(var i=0;i<targets.length;i++){
+        if(!targets[i].supressed){
+          context.fillStyle="red";
+        } else {
+          context.fillStyle = "yellow";
+        }
+        var d = targets[i].getDistance();
+        var a=targets[i].getAngle().a;
+        var x = Math.floor(d*Math.cos((a-90)*Math.PI/180))-5;
+        var y = Math.floor(d*Math.sin((a-90)*Math.PI/180))-5;
+        context.fillRect(x,y,10,10);
+      }
+    };
+    var self=this;
+    setInterval(function(){
+      self.drawReo(station.a);
+    },100);
 }
-// clock
-(function() {
-    var clock = document.getElementById('myClock');
-    // But there is a little problem
-    // we need to pad 0-9 with an extra
-    // 0 on the left for hours, seconds, minutes
-    var pad = function(x) {
-        return x < 10 ? '0'+x : x;
-    };
-    var ticktock;
-    ticktock = function () {
-        var d = new Date();
-        var h = pad(d.getHours());
-        var m = pad(d.getMinutes());
-        var s = pad(d.getSeconds());
-        clock.innerHTML = [h, m, s].join(':');
-    };
-    ticktock();
-    // Calling ticktock() every 1 second
-    setInterval(ticktock, 1000);
-}());

@@ -33,3 +33,7 @@ var config = {
     //время в с обновления консоли вывода целей
     consoleUpdating:30
 };
+//here i put some usefull global functions
+var getRandomArbitrary = function (min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
