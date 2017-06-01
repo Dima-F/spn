@@ -111,7 +111,7 @@ td {
 #reo {
     border:1px solid ;
     width:700px;
-    height: 700px;
+    height: auto;
     background-color:whitesmoke;
     margin: 0 auto;
     padding:20px;
@@ -248,6 +248,9 @@ td {
   align-content: center;
   background:url("../images/reo.png") no-repeat center center;
   margin: 30px 50px;
+}
+#reoInfo {
+  text-align: left;
 }
 #image-right {
     width:120px;

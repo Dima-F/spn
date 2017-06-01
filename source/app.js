@@ -1,25 +1,14 @@
 function run() {
     var reo = new REO();
     reo.generateTargets();
-    setInterval(function () {
-        reo.printTargets();
-    },config.consoleUpdating*1000);
-    reo.printTargets();
     var station = new Station(reo);
     var view = new View(station);
     view.displayKanalyLampsOff();
     view.generateSectorLamps();
     station.subscribe(view);
 
-
-
-
-
-
-
     //event handlers----------------------
     stationTumbler.onclick = function () {
-        reo.printTargets();
         view.toggleStationTumbler();
         station.toggleStart();
         view.refreshStatic(station);
@@ -37,7 +26,6 @@ function run() {
         else {
             view.toggleAntennaTumbler();
         }
-
     };
     avtokontrolTumbler.onclick = function () {
         view.toggleAvtokontrolTumbler();

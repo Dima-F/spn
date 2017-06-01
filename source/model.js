@@ -568,10 +568,10 @@ function Target(azimut,channel,zone,type) {
     //private members
     var _type = type;
     var _zone = zone;
-    var _angle = new Angle(azimut,this.getUgolMesta());
+    var _angle = new Angle(azimut,getU());
     var _channel = channel;
-    var _d = initDistance;
-    this.getUgolMesta = function(){
+    var _d;
+    function getU(){
       var u=null;
       switch(_zone){
           case 1:
@@ -580,16 +580,19 @@ function Target(azimut,channel,zone,type) {
           case 2:
               u=Math.floor(Math.random() * (config.relativeMaxUmZone2+1));
           break;
-          default:throw new Error('Wrong zone in target!');
+          default:throw new Error('Wrong zone in target![getU]');
       }
       return u;
-    };
-    this.initDistance = function(){
+    }
+    function initD(){
+      if(_zone!==1 && _zone!==2){
+        throw new Error("Wrong zone in target![InitD]");
+      }
       _d=(_zone==2)?
         getRandomArbitrary(50,140):
         getRandomArbitrary(160,290);
-    };
-    this.initDistance();
+    }
+    initD();
 
     //public members
     this.online = false;
@@ -637,7 +640,7 @@ function REO() {
             return;
         _targets = [];
         for (var i = 0; i < amount; i++) {
-            _targets[i] = new Target(getRandomArbitrary(0,359),getRandomArbitrary(1,64),getRandomArbitrary(1,2),getRandomArbitrary(1,2));
+            _targets[i] = new Target(getRandomArbitrary(0,359),getRandomArbitrary(1,64),getRandomTwo(),getRandomTwo());
             _targets[i].startTime=i*config.frequencyTarget;
             _targets[i].apear();
         }
@@ -655,30 +658,33 @@ function REO() {
             return t.online;
         });
     };
+    this.getAllTargets = function () {
+        return _targets;
+    };
     this.getSuppressedTargets = function () {
         return _targets.filter(function (t) {
             return t.supressed;
         });
     };
-    this.printTargets = function () {
-        if (_targets.length === 0) {
-            console.log("There are no targets in reo");
-        }
-        else {
-            for (var i = 0; i < _targets.length; i++) {
-                var info = 'Target ' + i + '>channel:' + _targets[i].getChannel() +
-                    ' azimut:' + _targets[i].getAngle().a +
-                    ' um:' + _targets[i].getAngle().u +
-                    ' type:' + _targets[i].getType() +
-                    ' zone:' + _targets[i].getZone() +
-                    ' start time:' + _targets[i].startTime+
-                    ' live during:' + _targets[i].liveTime+
-                    ' was suppressed:' + _targets[i].supressed+
-                    ' online: '+_targets[i].online+
-                    ' direction: '+_targets[i].direction;
-                console.log(info);
-            }
-            console.log('/n');
-        }
+    this.getReoInfoHtml = function(){
+      if (_targets.length === 0) {
+          return "<p>Нет целей в РЕО</p>";
+      }
+      else {
+          var info="";
+          for (var i = 0; i < _targets.length; i++) {
+              info += '<b>Цель '+i+'</b>' +":&nbsp;"+ 'канал:' + _targets[i].getChannel()+",&nbsp;"+
+                  'азимут(град):' + _targets[i].getAngle().a +",&nbsp;"+
+                  ' угол места(град):' + _targets[i].getAngle().u +",&nbsp;"+
+                  ' тип:' + _targets[i].getType() +",&nbsp;"+
+                  ' зана:' + _targets[i].getZone() +",&nbsp;"+
+                  ' время появления(с):' + _targets[i].startTime+",&nbsp;"+
+                  ' время жизни(с):' + _targets[i].liveTime+"&nbsp;"+
+                  ' подавлен:' + getRussianBool(_targets[i].supressed)+",&nbsp;"+
+                  ' онлайн:'+getRussianBool(_targets[i].online)+",&nbsp;"+
+                  ' растояние(км):'+_targets[i].getDistance()+".<br/>";
+          }
+          return info;
+      }
     };
 }

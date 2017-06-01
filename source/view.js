@@ -704,6 +704,7 @@ function View(station) {
       context.translate(r,r);
       context.save();
       if(station._3kV){
+        context.strokeStyle = "orange";
         context.shadowBlur=40;
         context.shadowColor="red";
         context.lineWidth=3;
@@ -712,12 +713,19 @@ function View(station) {
       context.lineTo(Math.floor(r*Math.cos((angle-90)*Math.PI/180)),Math.floor(r*Math.sin((angle-90)*Math.PI/180)));
       context.stroke();
       context.restore();
-      var targets = station.reo.getOnlineTargets();
+      var targets = station.reo.getAllTargets();
       for(var i=0;i<targets.length;i++){
         if(!targets[i].supressed){
-          context.fillStyle="red";
+          if(targets[i].online){
+            context.fillStyle="red";
+            context.strokeStyle = "red";
+          } else {
+            context.fillStyle="gray";
+            context.strokeStyle = "gray";
+          }
         } else {
-          context.fillStyle = "yellow";
+          context.fillStyle = "orange";
+          context.strokeStyle = "orange";
         }
         var d = targets[i].getDistance();
         var a=targets[i].getAngle().a;
@@ -726,8 +734,12 @@ function View(station) {
         context.fillRect(x,y,10,10);
       }
     };
+    this.printReo = function(){
+      document.getElementById("reoInfo").innerHTML=station.reo.getReoInfoHtml();
+    };
     var self=this;
     setInterval(function(){
       self.drawReo(station.a);
+      self.printReo();
     },100);
 }

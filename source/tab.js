@@ -64,9 +64,9 @@ function saveSettings(){
 }
 function addTarget(reo){
   var form = document.forms.addTargetForm;
-  var azimut=form.targetAzimut.value;
-  var zone=form.targetZone.value;
-  var type=form.targetType.value;
-  var channel= form.targetChannel.value;
+  var azimut=Number(form.targetAzimut.value);
+  var zone=Number(form.targetZone.value);
+  var type=Number(form.targetType.value);
+  var channel= Number(form.targetChannel.value);
   reo.addTarget(azimut,channel,zone,type);
 }
