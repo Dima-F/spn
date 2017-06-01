@@ -29,19 +29,7 @@ var config = {
     relativeMaxUmZone1:11,
     relativeMaxUmZone2:30,
     //время в с через которое проверяется в РЕО время жизни цели для удаления.
-    deletingTargetInterval:10
-};
-//here i put some usefull global functions
-var getRandomArbitrary = function (min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-var getRandomTwo = function () {
-  return Math.random()>0.5?1:2;
-};
-var getRussianBool = function(state){
-  if(state){
-    return "да";
-  } else {
-    return "нет";
-  }
+    deletingTargetInterval:10,
+    //обновление индикации РЕО(мс)
+    reoPictureUpdating:250
 };

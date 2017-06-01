@@ -116,6 +116,9 @@ var trEkstrapolacia = document.getElementById("trEkstrapolacia");
 var trDiagramuUzkie = document.getElementById("trDiagramuUzkie");
 var trDiagramuShirokie = document.getElementById("trDiagramuShirokie");
 
+//for music
+var music = document.getElementById("clickSound");
+
 function SmartCanva(element, imgPath, type) {
     element.width = 212;
     element.height = 212;
@@ -286,10 +289,12 @@ function View(station) {
             } else {
               station.antenna=false;
             }
+            music.play();
         }
         else {
             stationTumbler.setAttribute("src", "images/tumblers/off_1.png");
             this.displayKanalyLampsOff();
+            music.pause();
         }
     };
 
@@ -693,6 +698,7 @@ function View(station) {
         document.getElementById(id).className='shadow';
 
     };
+    //this method is using for writing on reoCanvas
     this.drawReo = function(angle){
       var element = document.getElementById("reoCanva");
       element.width=605;
@@ -732,6 +738,8 @@ function View(station) {
         var x = Math.floor(d*Math.cos((a-90)*Math.PI/180))-5;
         var y = Math.floor(d*Math.sin((a-90)*Math.PI/180))-5;
         context.fillRect(x,y,10,10);
+        context.font="10px Arial";
+        context.fillText((i+1),x,y-2);
       }
     };
     this.printReo = function(){
@@ -741,5 +749,5 @@ function View(station) {
     setInterval(function(){
       self.drawReo(station.a);
       self.printReo();
-    },100);
+    },config.reoPictureUpdating);
 }

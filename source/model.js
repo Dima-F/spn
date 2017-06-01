@@ -499,9 +499,11 @@ function Station(reo) {
         self.updateS();
         var vidergkaTime = self.vidergka===0?config.timeSoprovogdeniya:self.vidergka;
         self.idSoprovogdenie = setInterval(function () {
-            switch(target.direction){
-                case 1:self.right();break;
-                case -1:self.left();break;
+            switch(target.direction()){
+                case 1:self.right();
+                break;
+                case -1:self.left();
+                break;
                 case 0:break;
                 default:throw new Error("Wrong direction of target!");
             }
@@ -509,7 +511,7 @@ function Station(reo) {
             if(self._3kV && self.antenna){
                 target.supressed = true;
             }
-        },2500);
+        },3500);
         setTimeout(function () {
             self.stopSoprovogdenie (target);
             self.avtomat();
@@ -537,7 +539,7 @@ function Station(reo) {
         self.clearTimersAngles();
         self.exstrapolating = true;
         self.updateS();
-        switch(target.direction){
+        switch(target.direction()){
             case 1:self.right();break;
             case -1:self.left();break;
             case 0:break;
@@ -599,11 +601,8 @@ function Target(azimut,channel,zone,type) {
     this.liveTime = config.liveTarget;
     this.startTime = 0;
     this.direction = function () {
-        var r = Math.random();
-        if(r<0.4)return 1;
-        if(r>0.6)return -1;
-        return 0;
-    }();
+        return getRandomThree();
+    };
     this.supressed = false;
 
     this.getChannel = function(){
@@ -673,7 +672,7 @@ function REO() {
       else {
           var info="";
           for (var i = 0; i < _targets.length; i++) {
-              info += '<b>Цель '+i+'</b>' +":&nbsp;"+ 'канал:' + _targets[i].getChannel()+",&nbsp;"+
+              info += '<b>Цель '+(i+1)+'</b>' +":&nbsp;"+ 'канал:' + _targets[i].getChannel()+",&nbsp;"+
                   'азимут(град):' + _targets[i].getAngle().a +",&nbsp;"+
                   ' угол места(град):' + _targets[i].getAngle().u +",&nbsp;"+
                   ' тип:' + _targets[i].getType() +",&nbsp;"+
