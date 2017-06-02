@@ -27,7 +27,7 @@ var getRussianBool = function(state){
 
 //for all tabs
 function openTab(evt, tabName) {
-    if(tabName=='admin'){
+    if(tabName=='admin' || tabName=='reo'){
       /*if(config.password!==prompt("Введите пароль!")){
         return;
       }*/

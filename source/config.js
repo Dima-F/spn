@@ -6,7 +6,7 @@ var config = {
     fastUm:150,
     obzorAz:50,
     obzorUm:65,
-    password:'123ewq',
+    password:'123e',
     //время задержки загорания ламп в с
     delayAvariya:4,
     delayVisokoe:15,
