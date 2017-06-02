@@ -9,6 +9,13 @@ function run() {
 
     //event handlers----------------------
     stationTumbler.onclick = function () {
+        if (station.peredachik) {
+          alert('Отключите передатчик!');
+          return;
+        } else if (station.emuAzimut || station.emuUgolMesta) {
+          alert('Отключите ЭМУ!');
+          return;
+        }
         view.toggleStationTumbler();
         station.toggleStart();
         view.refreshStatic(station);

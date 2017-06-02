@@ -66,7 +66,6 @@ function Station(reo) {
             self.avariyaAk = false;
             self.updateS();
         }, config.delayAvariya * 1000);
-
         idVisokoe = setTimeout(function () {
             if (self.started && self.nizkoe && !self.avariyaAk) {
                 self.visokoe = true;
@@ -333,16 +332,13 @@ function Station(reo) {
         if (!this.started)
             return;
         if(this.soprovogdenie){
-            self._3kV = false;
-            if(self.peredachik){
-                self.avariyaVzs=true;
-            }
+            this.stopSoprovogdenie();
+        } else {
+          this.clearTimersAngles();
+          this.currentRegum = "pa";
+          this.poiskDirection = "z";
+          this.updateS();
         }
-        this.clearTimersAngles();
-        this.currentRegum = "pa";
-        this.poiskDirection = "z";
-        this.updateS();
-
     };
     this.avtomat = function () {
         if (!this.visokoe || !this.emuAzimut || !this.emuUgolMesta || this.currentRegum == "av") {
@@ -512,7 +508,7 @@ function Station(reo) {
                 target.supressed = true;
             }
         },3500);
-        setTimeout(function () {
+        this.idViderzka = setTimeout(function () {
             self.stopSoprovogdenie (target);
             self.avtomat();
             if(self.exstrapolation){
